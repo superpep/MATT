@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-// import example from './module-example'
+import gestinson from './gestinson'
 
 Vue.use(Vuex)
 
@@ -17,13 +17,22 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      // example
+      gestinson
     },
 
     // enable strict mode (adds overhead!)
     // for dev mode only
     strict: process.env.DEBUGGING
   })
+
+  if (process.env.DEV && module.hot) {
+    module.hot.accept(['./gestinson'], () => {
+      const newGestinson = require('./gestinson').default
+      Store.hotUpdate({
+        modules: { gestinson: newGestinson }
+      })
+    })
+  }
 
   return Store
 }
