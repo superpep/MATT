@@ -15,7 +15,6 @@
           Quasar App
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
@@ -47,7 +46,6 @@
 </template>
 
 <script>
-import { Loading } from 'quasar'
 import EssentialLink from 'components/EssentialLink.vue'
 
 const linksData = [
@@ -96,16 +94,6 @@ const linksData = [
 ]
 
 export default {
-  preFetch ({ redirect }) {
-    Loading.show()
-    if (typeof (Storage) === 'undefined') { // Si no hay local/session storage mostraremos un mensaje de error ya que poco se podrá hacer. Lo hacemos en el layou para que así se ejecute en todas las páginas.
-      this.$q.notify({
-        type: 'negative',
-        message: 'No se ha encontrado Local/Session storage. La aplicación no funcionará de forma correcta.'
-      })
-    }
-    Loading.hide()
-  },
   name: 'MainLayout',
   components: { EssentialLink },
   data () {
