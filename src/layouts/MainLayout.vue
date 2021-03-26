@@ -8,18 +8,21 @@
           round
           icon="menu"
           aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
+          @click="drawerState = !drawerState"
         />
 
         <q-toolbar-title>
-          Quasar App
+          Gestinson
         </q-toolbar-title>
+        <q-toolbar-subtitle>
+          {{currentDate}}
+        </q-toolbar-subtitle>
 
       </q-toolbar>
     </q-header>
 
     <q-drawer
-      v-model="leftDrawerOpen"
+      v-model="drawerState"
       show-if-above
       bordered
       content-class="bg-grey-1"
@@ -29,7 +32,7 @@
           header
           class="text-grey-8"
         >
-          Essential Links
+          Enlaces de interés
         </q-item-label>
         <EssentialLink
           v-for="link in essentialLinks"
@@ -47,59 +50,35 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
+import { date } from 'quasar'
 
-const linksData = [
+const notLoggedIn = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    title: 'Login',
+    caption: 'Inicio de sesión',
+    icon: 'login',
+    link: '/'
   }
 ]
 
 export default {
   name: 'MainLayout',
   components: { EssentialLink },
-  data () {
-    return {
-      leftDrawerOpen: false,
-      essentialLinks: linksData
+  computed: {
+    essentialLinks () { // Una vez tengamos el store, aquí comprobaremos si ya estamos logueados y devolveremos una lista u otra, ya que no siempre vamos a querer los mismos enlaces.
+      return notLoggedIn
+    },
+    currentDate () {
+      const timeStamp = Date.now()
+      return date.formatDate(timeStamp, 'dddd, DD') + ' de ' + date.formatDate(timeStamp, 'MMMM') + ' de ' + date.formatDate(timeStamp, 'YYYY')
+    },
+    drawerState: {
+      get () {
+        return this.$store.state.gestinson.drawerState
+      },
+      set (val) {
+        this.$store.commit('gestinson/updateDrawerState', val)
+      }
     }
   }
 }
