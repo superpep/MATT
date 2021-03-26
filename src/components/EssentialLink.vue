@@ -2,9 +2,10 @@
   <q-item
     clickable
     tag="a"
-    target="_blank"
+    target="_self"
     :href="link"
   >
+  <!-- el target="_self" es para abrir en la misma página. Para abrir en una nueva página utilizamos target="_blank" -->
     <q-item-section
       v-if="icon"
       avatar
