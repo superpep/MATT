@@ -98,8 +98,8 @@ module.exports = function (/* ctx */) {
 
       // Quasar plugins
       plugins: [
-        'LocalStorage',
-        'SessionStorage'
+        'Loading',
+        'Notify'
       ]
     },
 
