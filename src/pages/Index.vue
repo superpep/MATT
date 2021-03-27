@@ -35,6 +35,8 @@
   </q-page>
 </template>
 <script>
+import { encrypt } from 'boot/encryption'
+import { Loading, Notify } from 'quasar'
 export default {
   name: 'PageIndex',
   data () {
@@ -45,7 +47,21 @@ export default {
   },
   methods: {
     login () {
-      // Not implemented yet
+      Loading.show()
+      this.$store.dispatch('gestinson/login', {
+        dni: this.dni,
+        password: encrypt(this.password)
+      })
+        .then(() => {
+          // this.$router.push('crono')
+        })
+        .catch(err => {
+          Notify.create({
+            type: 'negative',
+            message: err
+          })
+        })
+      Loading.hide()
     }
   }
 }
