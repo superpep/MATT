@@ -38,6 +38,11 @@
 import { encrypt } from 'boot/encryption'
 import { Loading, Notify } from 'quasar'
 export default {
+  preFetch ({ store, redirect }) {
+    if (store.state.gestinson.user.name) { // SI JA ESTEM LOGUEJATS
+      redirect({ path: 'index' }) // REDIRECCIONEM A INDEX
+    }
+  },
   name: 'PageIndex',
   data () {
     return {
@@ -53,13 +58,14 @@ export default {
         password: encrypt(this.password)
       })
         .then(() => {
-          // this.$router.push('crono')
+          this.$router.push('index')
         })
         .catch(err => {
           Notify.create({
             type: 'negative',
             message: err
           })
+          this.password = ''
         })
       Loading.hide()
     }
