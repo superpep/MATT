@@ -3,6 +3,9 @@
 .thumbs.db
 node_modules
 
+#TO-DO
+TO-DO.md
+
 # Quasar core related directories
 .quasar
 /dist
