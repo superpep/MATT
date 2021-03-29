@@ -45,6 +45,11 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+    <q-footer v-if="currentUserName != null" elevated>
+      <q-toolbar>
+        <q-toolbar-title class="absolute-bottom-right">Conectado como: {{ currentUserName }}</q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
   </q-layout>
 </template>
 
@@ -52,7 +57,7 @@
 import EssentialLink from 'components/EssentialLink.vue'
 import { date } from 'quasar'
 
-const notLoggedIn = [
+const notLoggedInLinks = [
   {
     title: 'Login',
     caption: 'Inicio de sesión',
@@ -61,12 +66,25 @@ const notLoggedIn = [
   }
 ]
 
+const LoggedInLinks = [
+  {
+    title: 'Índice',
+    caption: 'Página principal',
+    icon: 'home',
+    link: '/index'
+  }
+]
+
 export default {
   name: 'MainLayout',
   components: { EssentialLink },
   computed: {
     essentialLinks () { // Una vez tengamos el store, aquí comprobaremos si ya estamos logueados y devolveremos una lista u otra, ya que no siempre vamos a querer los mismos enlaces.
-      return notLoggedIn
+      if (!this.$store.state.gestinson.user.name) {
+        return notLoggedInLinks
+      } else {
+        return LoggedInLinks
+      }
     },
     currentDate () {
       const timeStamp = Date.now()
@@ -78,6 +96,11 @@ export default {
       },
       set (val) {
         this.$store.commit('gestinson/updateDrawerState', val)
+      }
+    },
+    currentUserName: {
+      get () {
+        return this.$store.state.gestinson.user.name
       }
     }
   }
