@@ -72,6 +72,24 @@ const LoggedInLinks = [
     caption: 'Página principal',
     icon: 'home',
     link: '/index'
+  },
+  {
+    title: 'Gestión de usuarios',
+    caption: 'Añade, elimina o edita los usuarios',
+    icon: 'account_circle',
+    link: '/user-management'
+  },
+  {
+    title: 'Gestión de pacientes',
+    caption: 'Añade, elimina, edita o visualiza las gráficas de los pacientes',
+    icon: 'accessibility',
+    link: '/patient-management'
+  },
+  {
+    title: 'Ajustes',
+    caption: 'Edita los tiempos de corte',
+    icon: 'settings',
+    link: '/settings'
   }
 ]
 
