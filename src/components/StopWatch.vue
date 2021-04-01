@@ -29,7 +29,6 @@ export default {
       const date = new Date(null)
       date.setSeconds(this.elapsedTime / 1000)
       const utc = date.toUTCString()
-      console.log(utc)
       const time = utc.substr(utc.indexOf(':') - 2, 8)
       return time.substr(3, 5)
     }
