@@ -9,3 +9,8 @@ export const updateLoggedUser = (state, data) => {
     isAdmin: data.isAdmin
   }
 }
+
+export const addSegmentTime = (state, data) => {
+  state.segment_times = data.data
+  state.segment_times.innerId = data.innerId
+}

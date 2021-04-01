@@ -5,6 +5,7 @@ export default function () {
       dni: null,
       name: null,
       isAdmin: null
-    }
+    },
+    segment_times: null
   }
 }
