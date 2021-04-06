@@ -19,11 +19,12 @@
                 v-model="dni"
                 type="username"
                 label="DNI"
-                icon="login"/>
+                icon="login"
+                @keyup.enter="login()"/>
                 <template v-slot:prepend>
                   <q-icon name="event" />
                 </template>
-                <q-input square :rules="[val => val.length > 0|| 'La contraseña no puede estar vacía']" filled clearable v-model="password" type="password" label="Contraseña" />
+                <q-input @keyup.enter="login()" square :rules="[val => val.length > 0|| 'La contraseña no puede estar vacía']" filled clearable v-model="password" type="password" label="Contraseña" />
               </q-card-section>
             <q-card-actions class="q-px-md">
               <q-btn unelevated color="secondary" size="lg" type="submit" class="full-width" label="Login" />
