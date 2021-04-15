@@ -1,6 +1,7 @@
 export default function () {
   return {
     drawerState: false,
+    allUsers: [],
     user: {
       dni: null,
       name: null,

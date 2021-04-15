@@ -3,7 +3,8 @@ export function someAction (context) {
 }
 */
 import { db } from 'boot/firebase'
-import { Loading, Notify } from 'quasar'
+import { Loading, Notify, Dialog } from 'quasar'
+import { encrypt } from 'src/boot/encryption'
 
 export async function login ({ commit }, data) {
   const query = await db.collection('users').doc(data.dni).get()
@@ -75,4 +76,144 @@ export async function saveSegmentTimes ({ commit, state }, data) {
   } else {
     return new Promise((resolve, reject) => { reject('Para cambiar los ajustes de tiempo debes ser un usuario administrador.') })
   }
+}
+
+export function getAllUsers ({ commit }) {
+  Loading.show()
+  return db.collection('users').get() // Cogemos solo el último, ya que será el más reciente
+    .then((res) => {
+      return new Promise((resolve, reject) => {
+        res.forEach(element => { // Hay que hacer un forEach aunque solo lo hará 1 vez por el limit(1)
+          commit('addUser', { data: element.data(), dni: element.id })
+        })
+        Loading.hide()
+        resolve()
+      })
+    })
+    .catch((err) => {
+      Loading.hide()
+      return new Promise((resolve, reject) => { reject(err) })
+    })
+}
+
+export function deleteUser ({ state }, numUser) {
+  if (state.allUsers.filter(user => user.isAdmin).length === 1) {
+    if (state.allUsers[numUser].isAdmin) {
+      return Notify.create({
+        type: 'negative',
+        message: 'No se puede eliminar al último administrador.'
+      })
+    }
+  } else {
+    Loading.show()
+    return db.collection('users').doc(state.allUsers[numUser].dni).delete()
+      .then(res => {
+        state.allUsers.splice(numUser, 1)
+        Loading.hide()
+        Notify.create({
+          type: 'positive',
+          message: 'El usuario ha sido eliminado.'
+        })
+      })
+      .catch(err => {
+        Notify.create({
+          type: 'negative',
+          message: err
+        })
+        Loading.hide()
+      })
+  }
+}
+
+export function editPasswd ({ commit, state }, numUser) {
+  return new Promise((resolve, reject) => {
+    Dialog.create({
+      title: 'Nueva contraseña',
+      message: 'Introduce la nueva contraseña (8 carácteres mínimo)',
+      prompt: {
+        model: '',
+        type: 'password',
+        isValid: val => val.length >= 8
+      },
+      cancel: true
+    }).onOk(newPass => {
+      Dialog.create({
+        title: 'Repite contraseña',
+        message: 'Repite la contraseña',
+        prompt: {
+          model: '',
+          type: 'password'
+        },
+        cancel: true,
+        persostent: true
+      }).onOk(async newPassAgain => {
+        if (newPass === newPassAgain) {
+          Loading.show()
+          await db.collection('users').doc(state.allUsers[numUser].dni).update({
+            passwd: encrypt(newPass)
+          })
+          commit('updatePass', { numUser: numUser, newPass: encrypt(newPass) })
+          Loading.hide()
+          resolve('La contraseña ha sido actualizada con éxito.')
+        } else {
+          reject('Las contraseñas no coinciden, no se ha llevado a cabo el cambio.')
+        }
+      }).onCancel(() => {
+        reject('La contraseña no se ha actualizado')
+      })
+    }).onCancel(() => {
+      reject('La contraseña no se ha actualizado')
+    })
+  })
+}
+
+export function editName ({ commit, state }, numUser) {
+  return new Promise((resolve, reject) => {
+    Dialog.create({
+      title: 'Nueva nombre',
+      message: 'Introduce el nuevo nombre',
+      prompt: {
+        model: '',
+        type: 'text'
+      },
+      cancel: true
+    }).onOk(async newName => {
+      if (newName === '' || newName === null) {
+        reject('Nombre inválido.')
+      } else {
+        Loading.show()
+        await db.collection('users').doc(state.allUsers[numUser].dni).update({
+          name: newName
+        })
+        commit('updateName', { numUser: numUser, name: newName })
+        Loading.hide()
+        resolve('Se ha cambiado el nombre.')
+      }
+    }).onCancel(() => {
+      reject('El nombre no se ha actualizado')
+    })
+  })
+}
+
+export function addNewUser ({ commit, state }, userData) {
+  Loading.show()
+  const newDni = userData.dni
+  delete userData.dni
+  return new Promise((resolve, reject) => {
+    if (state.allUsers.filter(user => user.dni === newDni).length === 1) {
+      Loading.hide()
+      reject('Ya hay un usuario con este DNI')
+    } else {
+      db.collection('users').doc(newDni).set(userData)
+        .then(res => {
+          commit('addUser', { data: userData, dni: newDni })
+          Loading.hide()
+          resolve('Usuario añadido con éxito.')
+        })
+        .catch(err => {
+          Loading.hide()
+          reject(err)
+        })
+    }
+  })
 }
