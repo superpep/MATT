@@ -13,14 +13,18 @@ import UserList from 'components/UserList.vue'
 import CreateUser from 'components/CreateUser.vue'
 
 export default {
-  preFetch ({ store }) {
-    if (!store.state.gestinson.allUsers.length) { // Si el array de usuarios está vacío..
-      return store.dispatch('gestinson/getAllUsers')
+  preFetch ({ store, redirect }) {
+    if (store.state.gestinson.user.name) { // Si estamos logueados podemos acceder
+      if (!store.state.gestinson.allUsers.length) { // Si el array de usuarios está vacío..
+        return store.dispatch('gestinson/getAllUsers')
+      }
+    } else {
+      redirect({ path: '/' })
     }
   },
   data () {
     return {
-      currentUserIsAdmin: true, // this.$store.state.gestinson.user.isAdmin,
+      currentUserIsAdmin: this.$store.state.gestinson.user.isAdmin,
       addingUser: false
     }
   },
