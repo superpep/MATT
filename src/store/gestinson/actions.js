@@ -96,7 +96,7 @@ export function getAllUsers ({ commit }) {
     })
 }
 
-export function deleteUser ({ state }, numUser) {
+export function deleteUser ({ state, commit }, numUser) {
   if (state.allUsers.filter(user => user.isAdmin).length === 1) {
     if (state.allUsers[numUser].isAdmin) {
       return Notify.create({
@@ -108,7 +108,7 @@ export function deleteUser ({ state }, numUser) {
     Loading.show()
     return db.collection('users').doc(state.allUsers[numUser].dni).delete()
       .then(res => {
-        state.allUsers.splice(numUser, 1)
+        commit('deleteUser', numUser)
         Loading.hide()
         Notify.create({
           type: 'positive',

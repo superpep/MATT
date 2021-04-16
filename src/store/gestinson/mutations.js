@@ -41,3 +41,7 @@ export const activateUser = (state, userDni) => {
     }
   })
 }
+
+export const deleteUser = (state, numUser) => {
+  state.allUsers.splice(numUser, 1)
+}
