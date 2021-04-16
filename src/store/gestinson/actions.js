@@ -48,18 +48,18 @@ export function getSegmentTimes ({ commit }) {
     })
 }
 
-export async function saveSegmentTimes ({ commit, state }, data) {
+export function saveSegmentTimes ({ commit, state }, data) {
   if (state.user.isAdmin) {
     Loading.show()
     const newData = {}
     newData.id = state.segment_times.id + 1
     newData.seg1_max_time = data[0].max
-    newData.seg2_max_time = data[0].min
-    newData.seg3_max_time = data[1].max
-    newData.total_max_time = data[1].min
-    newData.seg1_min_time = data[2].max
-    newData.seg2_min_time = data[2].min
-    newData.seg3_min_time = data[3].max
+    newData.seg1_min_time = data[0].min
+    newData.seg2_max_time = data[1].max
+    newData.seg2_min_time = data[1].min
+    newData.seg3_max_time = data[2].max
+    newData.seg3_min_time = data[2].min
+    newData.total_max_time = data[3].max
     newData.total_min_time = data[3].min
     db.collection('segment_times').add(newData)
       .then(res => {
