@@ -19,8 +19,8 @@
             </q-td>
             <q-td key="min" :props="props">
               <div class="text-pre-wrap">{{ props.row.min }}</div>
-              <q-popup-edit v-model.number="props.row.seg2" buttons @save='notifyChanges' :validate='isNumber'>
-                <q-input type="number" v-model.number="props.row.seg2" dense autofocus :error='errorInput' :error-message='msgErrorInput'/>
+              <q-popup-edit v-model.number="props.row.min" buttons @save='notifyChanges' :validate='isNumber'>
+                <q-input type="number" v-model.number="props.row.min" dense autofocus :error='errorInput' :error-message='msgErrorInput'/>
               </q-popup-edit>
             </q-td>
           </q-tr>
