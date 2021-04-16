@@ -200,9 +200,38 @@ export function addNewUser ({ commit, state }, userData) {
   const newDni = userData.dni
   delete userData.dni
   return new Promise((resolve, reject) => {
-    if (state.allUsers.filter(user => user.dni === newDni).length === 1) {
-      Loading.hide()
-      reject('Ya hay un usuario con este DNI')
+    const userExists = state.allUsers.filter(user => user.dni === newDni)
+    if (userExists.length) {
+      if (userExists.isActive) {
+        Loading.hide()
+        reject('Ya hay un usuario con este DNI')
+      } else {
+        Loading.hide()
+        Dialog.create({
+          title: 'Usuario inactivo',
+          message: 'Este usuario está marcado como inactivo puesto que tiene algún paciente asignado. ¿Deseas reactivarlo?',
+          ok: {
+            push: true,
+            label: 'Reactivar'
+          },
+          cancel: true,
+          persistent: true
+        }).onOk(() => {
+          Loading.show()
+          db.collection('users').doc(newDni).set({ isActive: true })
+            .then(res => {
+              commit('activateUser', newDni)
+              Loading.hide()
+              resolve('Usuario reactivado con éxito.')
+            })
+            .catch(err => {
+              Loading.hide()
+              reject(err)
+            })
+        }).onCancel(() => {
+          reject('No se ha añadido ningún usuario.')
+        })
+      }
     } else {
       db.collection('users').doc(newDni).set(userData)
         .then(res => {

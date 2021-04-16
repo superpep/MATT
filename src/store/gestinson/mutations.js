@@ -32,3 +32,12 @@ export const updatePass = (state, data) => {
 export const updateName = (state, data) => {
   state.allUsers[data.numUser].name = data.name
 }
+
+export const activateUser = (state, userDni) => {
+  console.log(userDni)
+  state.allUsers.forEach(user => {
+    if (user.dni === userDni) {
+      user.isActive = true
+    }
+  })
+}
