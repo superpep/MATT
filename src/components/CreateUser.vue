@@ -3,6 +3,7 @@
       <q-page class="flex bg-image flex-center">
         <q-card v-bind:style="$q.screen.lt.sm?{'width': '80%'}:{'width':'30%'}">
           <q-card-section>
+            <q-fab round @click="cambiarEstado()" class="float-left" color="primary" icon="arrow_back" title="Volver atrás" />
             <q-avatar size="100px" class="absolute-center shadow-10">
               <img src="../assets/add-user.png">
             </q-avatar>
@@ -66,7 +67,6 @@
 
               <div>
                 <q-btn style="margin-bottom: 10px" label="Crear" class="full-width" type="submit" color="primary"/>
-                <q-btn label="Volver atrás" class="full-width" type="button" @click="cambiarEstado()" color="primary"/>
               </div>
             </q-form>
           </q-card-section>
