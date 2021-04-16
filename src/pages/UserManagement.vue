@@ -2,7 +2,7 @@
   <q-page class="bg-secondary items-center">
     <div v-if="!addingUser" >
       <UserList/>
-      <q-btn v-if="currentUserIsAdmin" push round @click="cambiarEstado()" style="margin-right: 50%;" class="float-right" color="primary" icon="add" title="Crear usuario" />
+      <q-btn v-if="currentUserIsAdmin" push round @click="cambiarEstado()" style="margin-left: 50%;" class="float-center" color="primary" icon="add" title="Crear usuario" />
     </div>
     <CreateUser v-else @cambiar-estado='cambiarEstado()'/>
   </q-page>
