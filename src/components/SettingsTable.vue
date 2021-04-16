@@ -11,28 +11,16 @@
             <q-td key="name" :props="props">
               {{ props.row.name }}
             </q-td>
-            <q-td key="seg1" :props="props">
-              {{ props.row.seg1 }}
-              <q-popup-edit v-model.number="props.row.seg1" buttons @save='notifyChanges' :validate='isNumber'>
-                <q-input type="number" v-model.number="props.row.seg1" dense autofocus :error='errorInput' :error-message='msgErrorInput'/>
+            <q-td key="max" :props="props">
+              {{ props.row.max }}
+              <q-popup-edit v-model.number="props.row.max" buttons @save='notifyChanges' :validate='isNumber'>
+                <q-input type="number" v-model.number="props.row.max" dense autofocus :error='errorInput' :error-message='msgErrorInput'/>
               </q-popup-edit>
             </q-td>
-            <q-td key="seg2" :props="props">
-              <div class="text-pre-wrap">{{ props.row.seg2 }}</div>
+            <q-td key="min" :props="props">
+              <div class="text-pre-wrap">{{ props.row.min }}</div>
               <q-popup-edit v-model.number="props.row.seg2" buttons @save='notifyChanges' :validate='isNumber'>
                 <q-input type="number" v-model.number="props.row.seg2" dense autofocus :error='errorInput' :error-message='msgErrorInput'/>
-              </q-popup-edit>
-            </q-td>
-            <q-td key="seg3" :props="props">
-              {{ props.row.seg3 }}
-              <q-popup-edit v-model.number="props.row.seg3" buttons @save='notifyChanges' :validate='isNumber'>
-                <q-input type="number" v-model.number="props.row.seg3"  dense autofocus :error='errorInput' :error-message='msgErrorInput'/>
-              </q-popup-edit>
-            </q-td>
-            <q-td key="total" :props="props">
-              {{ props.row.total }}
-              <q-popup-edit v-model.number="props.row.total" buttons @save='notifyChanges' :validate='isNumber'>
-                <q-input type="number" v-model.number="props.row.total" dense autofocus :error='errorInput' :error-message='msgErrorInput'/>
               </q-popup-edit>
             </q-td>
           </q-tr>
@@ -53,26 +41,30 @@ import { Notify } from 'quasar'
 
 const columns = [
   { name: 'name', align: 'left', classes: 'bg-grey-2 ellipsis text-bold', label: '', field: 'name' },
-  { name: 'seg1', label: 'Marcha', field: 'seg1' },
-  { name: 'seg2', label: 'Equilibrio', field: 'seg2' },
-  { name: 'seg3', label: 'Doble tarea', field: 'seg3' },
-  { name: 'total', label: 'Tiempo total', field: 'total' }
+  { name: 'max', label: 'Máximo', field: 'max' },
+  { name: 'min', label: 'Mínimo', field: 'min' }
 ]
 
 const data = [
   {
-    name: 'Máximo',
-    seg1: 0,
-    seg2: 0,
-    seg3: 0,
-    total: 0
+    name: 'Marcha',
+    max: 0,
+    min: 0
   },
   {
-    name: 'Mínimo',
-    seg1: 0,
-    seg2: 0,
-    seg3: 0,
-    total: 0
+    name: 'Equilibrio',
+    max: 0,
+    min: 0
+  },
+  {
+    name: 'Doble tarea',
+    max: 0,
+    min: 0
+  },
+  {
+    name: 'Tiempo total',
+    max: 0,
+    min: 0
   }
 ]
 
@@ -124,14 +116,14 @@ export default {
       this.changesMade = false
     },
     getData () {
-      this.data[0].seg1 = this.$store.state.gestinson.segment_times.seg1_max_time
-      this.data[0].seg2 = this.$store.state.gestinson.segment_times.seg2_max_time
-      this.data[0].seg3 = this.$store.state.gestinson.segment_times.seg3_max_time
-      this.data[0].total = this.$store.state.gestinson.segment_times.total_max_time
-      this.data[1].seg1 = this.$store.state.gestinson.segment_times.seg1_min_time
-      this.data[1].seg2 = this.$store.state.gestinson.segment_times.seg2_min_time
-      this.data[1].seg3 = this.$store.state.gestinson.segment_times.seg3_min_time
-      this.data[1].total = this.$store.state.gestinson.segment_times.total_min_time
+      this.data[0].max = this.$store.state.gestinson.segment_times.seg1_max_time
+      this.data[0].min = this.$store.state.gestinson.segment_times.seg1_min_time
+      this.data[1].max = this.$store.state.gestinson.segment_times.seg2_max_time
+      this.data[1].min = this.$store.state.gestinson.segment_times.seg2_min_time
+      this.data[2].max = this.$store.state.gestinson.segment_times.seg3_max_time
+      this.data[2].min = this.$store.state.gestinson.segment_times.seg3_min_time
+      this.data[3].max = this.$store.state.gestinson.segment_times.total_max_time
+      this.data[3].min = this.$store.state.gestinson.segment_times.total_min_time
     }
   }
 }

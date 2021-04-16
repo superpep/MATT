@@ -53,17 +53,21 @@ export async function saveSegmentTimes ({ commit, state }, data) {
     Loading.show()
     const newData = {}
     newData.id = state.segment_times.id + 1
-    newData.seg1_max_time = data[0].seg1
-    newData.seg2_max_time = data[0].seg2
-    newData.seg3_max_time = data[0].seg3
-    newData.total_max_time = data[0].total
-    newData.seg1_min_time = data[1].seg1
-    newData.seg2_min_time = data[1].seg2
-    newData.seg3_min_time = data[1].seg3
-    newData.total_min_time = data[1].total
+    newData.seg1_max_time = data[0].max
+    newData.seg2_max_time = data[0].min
+    newData.seg3_max_time = data[1].max
+    newData.total_max_time = data[1].min
+    newData.seg1_min_time = data[2].max
+    newData.seg2_min_time = data[2].min
+    newData.seg3_min_time = data[3].max
+    newData.total_min_time = data[3].min
     db.collection('segment_times').add(newData)
       .then(res => {
         commit('addSegmentTime', { data: newData, innerId: res.id })
+        Notify.create({
+          type: 'positive',
+          message: 'Tiempos de corte guardados correctamente.'
+        })
         Loading.hide()
       })
       .catch(err => {
