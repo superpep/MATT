@@ -9,7 +9,7 @@
 
         <q-item-section side>
           <div>
-            <q-btn-dropdown flat round icon="create" color="green" >
+            <q-btn-dropdown title="Editar nombre/contraseña" flat round icon="create" color="green" >
               <q-list>
                 <q-item @click="editName(numUser)" clickable v-close-popup >
                   <q-item-section>
@@ -24,7 +24,7 @@
                 </q-item>
               </q-list>
             </q-btn-dropdown>
-            <q-btn @click="confirmDelete(numUser)" flat round icon="delete" color="red" />
+            <q-btn @click="confirmDelete(numUser)" title="Eliminar usuario" flat round icon="delete" color="red" />
           </div>
         </q-item-section>
       </q-item>
