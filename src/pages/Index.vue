@@ -12,7 +12,7 @@
                 square
                 :rules="[
                   val => val.length > 0|| 'El usuario no puede estar vacío',
-                  val => new RegExp('^[0-9]{8,8}[A-Z]$').test(this.dni) || 'El DNI ha de ser 00000000X'
+                  val => new RegExp('^[0-9]{8,8}[A-Z]$').test(this.dni) || 'El DNI debe ser 00000000X'
                 ]"
                 filled
                 clearable
