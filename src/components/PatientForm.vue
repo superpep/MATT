@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex bg-image flex-center">
-      <q-fab round @click="cambiarEstado()" class="fixed-bottom-right" style="margin: 10px" color="primary" icon="arrow_back" title="Volver atrás" />
+      <q-fab round @click="cambiarEstado()" class="absolute-top-left" style="margin: 10px" color="primary" icon="arrow_back" title="Volver atrás" />
         <q-card>
           <q-card-section>
             <div class="text-center q-pt-lg">
