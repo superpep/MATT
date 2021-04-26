@@ -5,7 +5,7 @@
           <q-card-section>
             <div class="text-center q-pt-lg">
               <div class="col text-h6 ellipsis">
-                Alta paciente
+                {{ this.mainText }}
               </div>
             </div>
           </q-card-section>
@@ -269,11 +269,13 @@ export default {
     if (this.patientNumberToEdit !== null) { // Si se le pasa un paciente como prop significa que vamos a editarlo, si no, vamos a crear uno.
       this.new_patient = this.$store.state.gestinson.allPatients[this.patientNumberToEdit]
       this.buttonText = 'Editar'
+      this.mainText = 'Editar paciente'
     }
   },
   name: 'PatientForm',
   data () {
     return {
+      mainText: 'Alta paciente',
       buttonText: 'Crear',
       facePhotoObject: null,
       bodyPhotoObject: null,
