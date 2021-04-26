@@ -45,3 +45,13 @@ export const activateUser = (state, userDni) => {
 export const deleteUser = (state, numUser) => {
   state.allUsers.splice(numUser, 1)
 }
+
+export const addPatient = (state, data) => {
+  const newData = data.data
+  newData.innerId = data.innerId
+  state.allPatients.push(newData)
+}
+
+export const deletePatient = (state, numPatient) => {
+  state.allPatients.splice(numPatient, 1)
+}

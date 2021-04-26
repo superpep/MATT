@@ -44,7 +44,7 @@ export function getSegmentTimes ({ commit }) {
     })
     .catch((err) => {
       Loading.hide()
-      return new Promise((resolve, reject) => { reject(err) })
+      return new Promise((resolve, reject) => { reject(err.message) })
     })
 }
 
@@ -73,7 +73,7 @@ export function saveSegmentTimes ({ commit, state }, data) {
       .catch(err => {
         Notify.create({
           type: 'negative',
-          message: err
+          message: err.message
         })
         Loading.hide()
       })
@@ -84,10 +84,10 @@ export function saveSegmentTimes ({ commit, state }, data) {
 
 export function getAllUsers ({ commit }) {
   Loading.show()
-  return db.collection('users').get() // Cogemos solo el último, ya que será el más reciente
+  return db.collection('users').get()
     .then((res) => {
       return new Promise((resolve, reject) => {
-        res.forEach(element => { // Hay que hacer un forEach aunque solo lo hará 1 vez por el limit(1)
+        res.forEach(element => {
           commit('addUser', { data: element.data(), dni: element.id })
         })
         Loading.hide()
@@ -96,7 +96,10 @@ export function getAllUsers ({ commit }) {
     })
     .catch((err) => {
       Loading.hide()
-      return new Promise((resolve, reject) => { reject(err) })
+      Notify.create({
+        type: 'negative',
+        message: err.message
+      })
     })
 }
 
@@ -122,7 +125,7 @@ export function deleteUser ({ state, commit }, numUser) {
       .catch(err => {
         Notify.create({
           type: 'negative',
-          message: err
+          message: err.message
         })
         Loading.hide()
       })
@@ -230,7 +233,7 @@ export function addNewUser ({ commit, state }, userData) {
             })
             .catch(err => {
               Loading.hide()
-              reject(err)
+              reject(err.message)
             })
         }).onCancel(() => {
           reject('No se ha añadido ningún usuario.')
@@ -245,7 +248,72 @@ export function addNewUser ({ commit, state }, userData) {
         })
         .catch(err => {
           Loading.hide()
-          reject(err)
+          reject(err.message)
+        })
+    }
+  })
+}
+
+export function getAllPatients ({ commit }) {
+  Loading.show()
+  return db.collection('patients').get()
+    .then((res) => {
+      return new Promise((resolve, reject) => {
+        res.forEach(element => {
+          commit('addPatient', { data: element.data(), innerId: element.id })
+        })
+        Loading.hide()
+        resolve()
+      })
+    })
+    .catch((err) => {
+      Loading.hide()
+      Notify.create({
+        type: 'negative',
+        message: err.message
+      })
+    })
+}
+
+export function deletePatient ({ state, commit }, numPatient) {
+  Loading.show()
+  return db.collection('patients').doc(state.allPatients[numPatient].innerId).delete()
+    .then(res => {
+      commit('deletePatient', numPatient)
+      Loading.hide()
+      Notify.create({
+        type: 'positive',
+        message: 'El paciente ha sido eliminado.'
+      })
+    })
+    .catch(err => {
+      Notify.create({
+        type: 'negative',
+        message: err.message
+      })
+      Loading.hide()
+    })
+}
+
+export function addNewPatient ({ commit, state }, newPatient) {
+  Loading.show()
+  return new Promise((resolve, reject) => {
+    console.log(newPatient)
+    const patientExists = state.allPatients.filter(patient => patient.dni === newPatient.dni || patient.sip === newPatient.sip)
+    if (patientExists.length) {
+      Loading.hide()
+      reject('Ya hay un paciente con ese DNI / SIP')
+    } else {
+      db.collection('patients').add(newPatient)
+        .then(res => {
+          console.log(res)
+          commit('addPatient', { data: newPatient, innerId: res.id })
+          Loading.hide()
+          resolve('Paciente añadido con éxito.')
+        })
+        .catch(err => {
+          Loading.hide()
+          reject(err.message)
         })
     }
   })
