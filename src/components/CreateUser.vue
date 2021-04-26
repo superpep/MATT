@@ -120,7 +120,7 @@ export default {
           this.cambiarEstado()
           this.$q.notify({
             type: 'negative',
-            message: err
+            message: err.message
           })
         })
     }

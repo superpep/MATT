@@ -54,7 +54,7 @@ export default {
           .catch(err => {
             this.$q.notify({
               type: 'negative',
-              message: err
+              message: err.message
             })
           })
       }
@@ -86,7 +86,7 @@ export default {
               .catch(err => {
                 this.$q.notify({
                   type: 'negative',
-                  message: err
+                  message: err.message
                 })
               })
           }
@@ -102,7 +102,7 @@ export default {
           .catch(err => {
             this.$q.notify({
               type: 'negative',
-              message: err
+              message: err.message
             })
           })
       }
