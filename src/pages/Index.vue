@@ -64,7 +64,7 @@ export default {
         .catch(err => {
           Notify.create({
             type: 'negative',
-            message: err
+            message: err.message
           })
           this.password = ''
         })
