@@ -3,6 +3,7 @@ export function someAction (context) {
 }
 */
 import { db } from 'boot/firebase'
+import firebase from 'firebase/app'
 import { Loading, Notify, Dialog } from 'quasar'
 import { encrypt } from 'src/boot/encryption'
 
@@ -314,6 +315,30 @@ export function addNewPatient ({ commit, state }, newPatient) {
         .catch(err => {
           Loading.hide()
           reject(err.message)
+        })
+    }
+  })
+}
+
+export function saveTimes ({ commit, state }, data) {
+  Loading.show()
+  console.log(data.times)
+  state.allPatients.forEach((patient) => {
+    if (patient.innerId === data.innerId) {
+      db.collection('patients').doc(data.innerId).update({ lap_times: firebase.firestore.FieldValue.arrayUnion(data.times) })
+        .then(res => {
+          Loading.hide()
+          Notify.create({
+            type: 'positive',
+            message: 'Tiempos guardados correctamente.'
+          })
+        })
+        .catch(err => {
+          Loading.hide()
+          Notify.create({
+            type: 'negative',
+            message: err.message
+          })
         })
     }
   })
