@@ -169,7 +169,7 @@ export default {
       return this.$store.state.gestinson.allPatients
     },
     time: function () {
-      return this.minutes + ':' + (this.milliseconds / 1000 >= 10 ? (this.milliseconds / 1000).toFixed(2) : '0' + (this.milliseconds / 1000).toFixed(2))
+      return this.minutes + ':' + (this.seconds >= 10 ? this.seconds.toFixed(2) : '0' + this.seconds.toFixed(2))
     },
     milliseconds: function () {
       return this.currentTime - this.startTime
@@ -180,9 +180,7 @@ export default {
       return min
     },
     seconds: function () {
-      const lapsed = this.milliseconds
-      const sec = Math.ceil((lapsed / 1000) % 60)
-      return sec >= 10 ? sec : '0' + (sec === 0 ? sec : sec - 1)
+      return this.milliseconds / 1000 % 60
     }
   }
 }
