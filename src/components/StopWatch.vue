@@ -28,9 +28,9 @@
         <q-btn class="button_margin" round disable color="grey" icon="replay" title="Volver a comenzar" />
       </div>
       <br/>
-      <div v-if="laps_time.length" v-html="lap_1" ></div>
-      <div v-if="laps_time.length > 1" v-html="lap_2" ></div>
-      <div v-if="laps_time.length > 2" v-html="lap_3" ></div>
+      <div v-if="laps_time.length" class="text-h5 text-orange text-center">Marcha: {{ this.laps_time[0] }}</div>
+      <div v-if="laps_time.length > 1" class="text-h5 text-orange text-center">Equilibrio: {{ this.laps_time[1] }}</div>
+      <div v-if="laps_time.length > 2" class="text-h5 text-orange text-center">Doble tarea: {{ this.laps_time[2] }}</div>
     </div>
 </template>
 
@@ -101,6 +101,7 @@ export default {
     },
     lapColor (lapNum) {
       const totalSeconds = this.milliseconds / 1000 - this.previous_time // Lo pasamos todo a segundos ya que los tiempos de corte están en segundos
+      console.log(totalSeconds)
       if (lapNum === 0) {
         const splitMinTime = this.$store.state.gestinson.segment_times.seg1_min_time
         if (totalSeconds < splitMinTime) {
@@ -153,9 +154,6 @@ export default {
     }
   },
   computed: {
-    lap_1 () {
-      return '<div class="text-h5 ' + this.lapColor(0) + ' text-center">Marcha: ' + this.laps_time[0] + '</div>'
-    },
     lap_2 () {
       return '<div class="text-h5 ' + this.lapColor(1) + ' text-center">Equilibrio: ' + this.laps_time[1] + '</div>'
     },
