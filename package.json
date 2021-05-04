@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "@syncfusion/ej2-base": "^19.1.57",
+    "@syncfusion/ej2-vue-charts": "^19.1.59",
     "core-js": "^3.6.5",
     "firebase": "^8.3.1",
     "quasar": "^1.0.0",
