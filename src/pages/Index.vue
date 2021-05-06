@@ -35,6 +35,11 @@
             <q-card-actions class="q-px-md">
               <q-btn unelevated color="secondary" size="lg" type="submit" class="full-width" label="Login" />
             </q-card-actions>
+            <a @click='goToRegister'>
+              <small class="absolute-bottom-center cursor-pointer text-blue">
+                Regístrate
+              </small>
+            </a>
           </q-form>
         </q-card>
       </div>
@@ -57,8 +62,16 @@ export default {
   methods: {
     async login () {
       await authenticate(this.email, this.password)
-        .then(() => {
-          setPersistence(this.persist)
+        .then(async (user) => {
+          if (user.user.emailVerified) {
+            setPersistence(this.persist)
+          } else {
+            Notify.create({
+              type: 'negative',
+              message: this.$t('verify_before_login')
+            })
+            await auth.signOut()
+          }
         })
         .catch(err => {
           Notify.create({
@@ -92,6 +105,9 @@ export default {
               message: err.message
             }))
       })
+    },
+    goToRegister () {
+      this.$router.push({ name: 'register' })
     }
   }
 }

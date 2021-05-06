@@ -23,7 +23,6 @@ const authenticate = (email, password) =>
 
 const db = firebase.firestore()
 const auth = firebase.auth()
-auth.languageCode = 'es'
 
 const setPersistence = (persist) => {
   if (persist) {
