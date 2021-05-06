@@ -14,12 +14,8 @@ import CreateUser from 'components/CreateUser.vue'
 
 export default {
   preFetch ({ store, redirect }) {
-    if (store.state.gestinson.user.name) { // Si estamos logueados podemos acceder
-      if (!store.state.gestinson.allUsers.length) { // Si el array de usuarios está vacío..
-        return store.dispatch('gestinson/getAllUsers')
-      }
-    } else {
-      redirect({ path: '/' })
+    if (store.state.gestinson.segment_times === null) { // Si los tiempos no están cargados en memoria, los cargamos.
+      return this.$store.dispatch('gestinson/getAllUsers')
     }
   },
   data () {

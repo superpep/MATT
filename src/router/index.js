@@ -1,3 +1,4 @@
+import { Loading } from 'quasar'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -14,7 +15,11 @@ Vue.use(VueRouter)
  * with the Router instance.
  */
 
-export default function (/* { store, ssrContext } */) {
+function sleep (ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+export default function ({ store }) {
   const Router = new VueRouter({
     scrollBehavior: () => ({ x: 0, y: 0 }),
     routes,
@@ -24,6 +29,28 @@ export default function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> publicPath
     mode: process.env.VUE_ROUTER_MODE,
     base: process.env.VUE_ROUTER_BASE
+  })
+
+  Router.beforeEach(async (to, from, next) => {
+    if (from.path === '/') { // Solo eficiente si se va a utilizar mucho el mantener
+      let count = 0
+      while (count < 100) {
+        Loading.show()
+        if (!store.state.gestinson.user.loggedIn) {
+          await sleep(10)
+          count++
+        } else {
+          break
+        }
+      }
+    }
+    if (!store.state.gestinson.user.loggedIn && to.name !== 'login') {
+      next({ name: 'login' })
+    } else if (to.name === 'login' && store.state.gestinson.user.loggedIn) {
+      next({ path: 'index' })
+    } else {
+      next()
+    }
   })
 
   return Router

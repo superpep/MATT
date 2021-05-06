@@ -4,9 +4,8 @@ export default function () {
     allUsers: [],
     allPatients: [],
     user: {
-      dni: null,
-      name: null,
-      isAdmin: null
+      loggedIn: false,
+      data: null
     },
     segment_times: null
   }

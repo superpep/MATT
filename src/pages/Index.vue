@@ -10,21 +10,24 @@
               <q-card-section>
                 <q-input
                 square
+                lazy-rules=""
                 :rules="[
                   val => val.length > 0|| 'El usuario no puede estar vacío',
-                  val => new RegExp('^[0-9]{8,8}[A-Z]$').test(this.dni) || 'El DNI debe ser 00000000X'
+                  val => new RegExp('^[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$').test(val) || 'Introduce un correo correcto'
                 ]"
                 filled
                 clearable
-                v-model="dni"
-                type="username"
-                label="DNI"
+                v-model="email"
+                type="email"
+                label="Correo electrónico"
                 icon="login"
                 @keyup.enter="login()"/>
                 <template v-slot:prepend>
                   <q-icon name="event" />
                 </template>
                 <q-input @keyup.enter="login()" square :rules="[val => val.length > 0|| 'La contraseña no puede estar vacía']" filled clearable v-model="password" type="password" label="Contraseña" />
+                <q-checkbox v-model="persist" label="Mantener sesión iniciada" />
+                <a @click='resetPassword' ><small class="absolute-bottom-right">¿Has olvidado la contraseña?</small></a>
               </q-card-section>
             <q-card-actions class="q-px-md">
               <q-btn unelevated color="secondary" size="lg" type="submit" class="full-width" label="Login" />
@@ -36,30 +39,23 @@
   </q-page>
 </template>
 <script>
-import { encrypt } from 'boot/encryption'
 import { Loading, Notify } from 'quasar'
+import { authenticate, setPersistence } from 'boot/firebase'
+
 export default {
-  preFetch ({ store, redirect }) {
-    if (store.state.gestinson.user.name) { // SI JA ESTEM LOGUEJATS
-      redirect({ path: 'index' }) // REDIRECCIONEM A INDEX
-    }
-  },
   name: 'PageIndex',
   data () {
     return {
-      dni: '',
+      persist: false,
+      email: '',
       password: ''
     }
   },
   methods: {
-    login () {
-      Loading.show()
-      this.$store.dispatch('gestinson/login', {
-        dni: this.dni,
-        password: encrypt(this.password)
-      })
+    async login () {
+      await authenticate(this.email, this.password)
         .then(() => {
-          this.$router.push('index')
+          setPersistence(this.persist)
         })
         .catch(err => {
           Notify.create({
@@ -68,6 +64,10 @@ export default {
           })
           this.password = ''
         })
+      this.$router.push({ path: 'index' })
+    },
+    resetPassword () {
+      Loading.show()
       Loading.hide()
     }
   }
