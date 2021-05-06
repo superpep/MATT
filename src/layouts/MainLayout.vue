@@ -59,7 +59,7 @@ import { date } from 'quasar'
 
 const notLoggedInLinks = [
   {
-    title: 'Login',
+    title: 'Iniciar sesión',
     caption: 'Inicio de sesión',
     icon: 'login',
     link: '/'
@@ -93,7 +93,7 @@ const LoggedInLinks = [
   },
   {
     title: 'Cerrar sesión',
-    caption: '',
+    caption: 'Para mantener la sesión abierta tendrás que volver a iniciar sesión y marcar la casilla',
     icon: 'logout',
     link: '/#/signout'
   }
