@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { auth } from 'boot/firebase'
 export default {
   name: 'LanguageSelector',
   data () {
@@ -27,6 +28,7 @@ export default {
   watch: {
     lang (lang) {
       this.$i18n.locale = lang
+      auth.languageCode = (lang === 'es-es' ? 'es' : lang)
     }
   }
 }
