@@ -5,7 +5,7 @@
         <h5 class="text-h5 text-white q-my-md">Login</h5>
       </div>
       <div class="row">
-        <q-card square bordered class="q-pa-lg shadow-1">
+        <q-card square bordered class="q-pa-lg shadow-3">
             <q-form class="q-gutter-md" @submit.prevent="login">
               <q-card-section>
                 <q-input
@@ -27,7 +27,11 @@
                 </template>
                 <q-input @keyup.enter="login()" square :rules="[val => val.length > 0|| 'La contraseña no puede estar vacía']" filled clearable v-model="password" type="password" label="Contraseña" />
                 <q-checkbox v-model="persist" label="Mantener sesión iniciada" />
-                <a @click='resetPassword' ><small class="absolute-bottom-right">¿Has olvidado la contraseña?</small></a>
+                <a @click='resetPassword'>
+                  <small class="absolute-bottom-right cursor-pointer text-blue">
+                    ¿Has olvidado la contraseña?
+                  </small>
+                </a>
               </q-card-section>
             <q-card-actions class="q-px-md">
               <q-btn unelevated color="secondary" size="lg" type="submit" class="full-width" label="Login" />
@@ -39,8 +43,8 @@
   </q-page>
 </template>
 <script>
-import { Loading, Notify } from 'quasar'
-import { authenticate, setPersistence } from 'boot/firebase'
+import { Notify } from 'quasar'
+import { authenticate, setPersistence, auth } from 'boot/firebase'
 
 export default {
   name: 'PageIndex',
@@ -67,8 +71,28 @@ export default {
       this.$router.push({ path: 'index' })
     },
     resetPassword () {
-      Loading.show()
-      Loading.hide()
+      this.$q.dialog({
+        title: 'Restablecer contraseña',
+        message: 'Introduzca el email asociado a su cuenta',
+        prompt: {
+          model: '',
+          type: 'email'
+        },
+        cancel: true
+      }).onOk(mail => {
+        auth.sendPasswordResetEmail(mail)
+          .then((res) => {
+            Notify.create({
+              type: 'positive',
+              message: 'Correo de recuperación enviado. Mira tu bandeja de entrada.'
+            })
+          })
+          .catch((err) =>
+            Notify.create({
+              type: 'negative',
+              message: err.message
+            }))
+      })
     }
   }
 }
