@@ -42,9 +42,9 @@ export default function ({ store }) {
         }
       }
     }
-    if (!store.state.gestinson.user.loggedIn && to.name !== 'login') {
+    if (!store.state.gestinson.user.loggedIn && (to.name !== 'login' && to.name !== 'register')) {
       next({ name: 'login' })
-    } else if (to.name === 'login' && store.state.gestinson.user.loggedIn) {
+    } else if ((to.name === 'login' || to.name === 'register') && store.state.gestinson.user.loggedIn) {
       next({ path: 'index' })
     } else {
       next()
