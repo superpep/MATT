@@ -12,7 +12,6 @@
                 square
                 lazy-rules=""
                 :rules="[
-                  val => val.length > 0|| 'El usuario no puede estar vacío',
                   val => new RegExp('^[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$').test(val) || 'Introduce un correo correcto'
                 ]"
                 filled

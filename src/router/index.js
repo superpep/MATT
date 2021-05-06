@@ -1,4 +1,3 @@
-import { Loading } from 'quasar'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -35,7 +34,6 @@ export default function ({ store }) {
     if (from.path === '/') { // Solo eficiente si se va a utilizar mucho el mantener
       let count = 0
       while (count < 100) {
-        Loading.show()
         if (!store.state.gestinson.user.loggedIn) {
           await sleep(10)
           count++

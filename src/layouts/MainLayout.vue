@@ -45,9 +45,9 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-    <q-footer v-if="currentUserName != null" elevated>
-      <q-toolbar>
-        <q-toolbar-title class="absolute-bottom-right">Conectado como: {{ currentUserName }}</q-toolbar-title>
+    <q-footer elevated>
+      <q-toolbar v-if="userName != null" >
+        <q-toolbar-title style="padding-right: 10px" class="text-h6 absolute-right">Conectado como: {{ userName }}</q-toolbar-title>
       </q-toolbar>
     </q-footer>
   </q-layout>
@@ -90,6 +90,12 @@ const LoggedInLinks = [
     caption: 'Edita los tiempos de corte',
     icon: 'settings',
     link: '/#/settings'
+  },
+  {
+    title: 'Cerrar sesión',
+    caption: '',
+    icon: 'logout',
+    link: '/#/signout'
   }
 ]
 
@@ -98,10 +104,17 @@ export default {
   components: { EssentialLink },
   computed: {
     essentialLinks () { // Una vez tengamos el store, aquí comprobaremos si ya estamos logueados y devolveremos una lista u otra, ya que no siempre vamos a querer los mismos enlaces.
-      if (!this.$store.state.gestinson.user.name) {
-        return notLoggedInLinks
-      } else {
+      if (this.$store.state.gestinson.user.loggedIn) {
         return LoggedInLinks
+      } else {
+        return notLoggedInLinks
+      }
+    },
+    userName () {
+      if (this.$store.state.gestinson.user.loggedIn) {
+        return this.$store.state.gestinson.user.data.displayName
+      } else {
+        return null
       }
     },
     currentDate () {
@@ -114,11 +127,6 @@ export default {
       },
       set (val) {
         this.$store.commit('gestinson/updateDrawerState', val)
-      }
-    },
-    currentUserName: {
-      get () {
-        return this.$store.state.gestinson.user.name
       }
     }
   }
