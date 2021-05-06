@@ -40,6 +40,7 @@
           v-bind="link"
         />
       </q-list>
+      <LanguageSelector class="absolute-bottom"/>
     </q-drawer>
 
     <q-page-container>
@@ -55,6 +56,7 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
+import LanguageSelector from 'components/LanguageSelector.vue'
 import { date } from 'quasar'
 
 const notLoggedInLinks = [
@@ -62,7 +64,13 @@ const notLoggedInLinks = [
     title: 'Iniciar sesión',
     caption: 'Inicio de sesión',
     icon: 'login',
-    link: '/'
+    link: '/#/login'
+  },
+  {
+    title: 'Registro',
+    caption: 'Crea un nuevo usuario',
+    icon: 'person_add',
+    link: '/#/register'
   }
 ]
 
@@ -101,7 +109,7 @@ const LoggedInLinks = [
 
 export default {
   name: 'MainLayout',
-  components: { EssentialLink },
+  components: { EssentialLink, LanguageSelector },
   computed: {
     essentialLinks () { // Una vez tengamos el store, aquí comprobaremos si ya estamos logueados y devolveremos una lista u otra, ya que no siempre vamos a querer los mismos enlaces.
       if (this.$store.state.gestinson.user.loggedIn) {
