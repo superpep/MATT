@@ -9,8 +9,8 @@ const routes = [
       { path: 'signout', component: () => import('pages/Signout.vue') },
       { path: 'index', component: () => import('pages/MainPage.vue') },
       { path: 'settings', component: () => import('pages/Settings.vue') },
-      { path: 'user-management', component: () => import('pages/UserManagement.vue') },
-      { path: 'patient-management', component: () => import('pages/PatientManagement.vue') }
+      { path: 'edit-profile', component: () => import('src/pages/EditProfile.vue') },
+      { path: 'patient-management', component: () => import('src/pages/PatientManagement.vue') }
     ]
   },
 
