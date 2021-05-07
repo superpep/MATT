@@ -2,10 +2,9 @@
 export function someAction (context) {
 }
 */
-import { db } from 'boot/firebase'
+import { db, auth } from 'boot/firebase'
 import firebase from 'firebase/app'
-import { Loading, Notify, Dialog } from 'quasar'
-import { encrypt } from 'src/boot/encryption'
+import { Loading, Notify } from 'quasar'
 
 export function fetchUser ({ commit }, user) {
   commit('SET_LOGGED_IN', user !== null)
@@ -70,178 +69,6 @@ export function saveSegmentTimes ({ commit, state }, data) {
   } else {
     return new Promise((resolve, reject) => { reject('Para cambiar los ajustes de tiempo debes ser un usuario administrador.') })
   }
-}
-
-export function getAllUsers ({ commit }) {
-  Loading.show()
-  return db.collection('users').get()
-    .then((res) => {
-      return new Promise((resolve, reject) => {
-        res.forEach(element => {
-          commit('addUser', { data: element.data(), dni: element.id })
-        })
-        Loading.hide()
-        resolve()
-      })
-    })
-    .catch((err) => {
-      Loading.hide()
-      Notify.create({
-        type: 'negative',
-        message: err.message
-      })
-    })
-}
-
-export function deleteUser ({ state, commit }, numUser) {
-  if (state.allUsers.filter(user => user.isAdmin).length === 1) {
-    if (state.allUsers[numUser].isAdmin) {
-      return Notify.create({
-        type: 'negative',
-        message: 'No se puede eliminar al último administrador.'
-      })
-    }
-  } else {
-    Loading.show()
-    return db.collection('users').doc(state.allUsers[numUser].dni).delete()
-      .then(res => {
-        commit('deleteUser', numUser)
-        Loading.hide()
-        Notify.create({
-          type: 'positive',
-          message: 'El usuario ha sido eliminado.'
-        })
-      })
-      .catch(err => {
-        Notify.create({
-          type: 'negative',
-          message: err.message
-        })
-        Loading.hide()
-      })
-  }
-}
-
-export function editPasswd ({ commit, state }, numUser) {
-  return new Promise((resolve, reject) => {
-    Dialog.create({
-      title: 'Nueva contraseña',
-      message: 'Introduce la nueva contraseña (8 carácteres mínimo)',
-      prompt: {
-        model: '',
-        type: 'password',
-        isValid: val => val.length >= 8
-      },
-      cancel: true
-    }).onOk(newPass => {
-      Dialog.create({
-        title: 'Repite contraseña',
-        message: 'Repite la contraseña',
-        prompt: {
-          model: '',
-          type: 'password'
-        },
-        cancel: true,
-        persostent: true
-      }).onOk(async newPassAgain => {
-        if (newPass === newPassAgain) {
-          Loading.show()
-          await db.collection('users').doc(state.allUsers[numUser].dni).update({
-            passwd: encrypt(newPass)
-          })
-          commit('updatePass', { numUser: numUser, newPass: encrypt(newPass) })
-          Loading.hide()
-          resolve('La contraseña ha sido actualizada con éxito.')
-        } else {
-          reject('Las contraseñas no coinciden, no se ha llevado a cabo el cambio.')
-        }
-      }).onCancel(() => {
-        reject('La contraseña no se ha actualizado')
-      })
-    }).onCancel(() => {
-      reject('La contraseña no se ha actualizado')
-    })
-  })
-}
-
-export function editName ({ commit, state }, numUser) {
-  return new Promise((resolve, reject) => {
-    Dialog.create({
-      title: 'Nueva nombre',
-      message: 'Introduce el nuevo nombre',
-      prompt: {
-        model: '',
-        type: 'text'
-      },
-      cancel: true
-    }).onOk(async newName => {
-      if (newName === '' || newName === null) {
-        reject('Nombre inválido.')
-      } else {
-        Loading.show()
-        await db.collection('users').doc(state.allUsers[numUser].dni).update({
-          name: newName
-        })
-        commit('updateName', { numUser: numUser, name: newName })
-        Loading.hide()
-        resolve('Se ha cambiado el nombre.')
-      }
-    }).onCancel(() => {
-      reject('El nombre no se ha actualizado')
-    })
-  })
-}
-
-export function addNewUser ({ commit, state }, userData) {
-  Loading.show()
-  const newDni = userData.dni
-  delete userData.dni
-  return new Promise((resolve, reject) => {
-    const userExists = state.allUsers.filter(user => user.dni === newDni)
-    if (userExists.length) {
-      if (userExists.isActive) {
-        Loading.hide()
-        reject('Ya hay un usuario con este DNI')
-      } else {
-        Loading.hide()
-        Dialog.create({
-          title: 'Usuario inactivo',
-          message: 'Este usuario está marcado como inactivo puesto que tiene algún paciente asignado. ¿Deseas reactivarlo?',
-          ok: {
-            push: true,
-            label: 'Reactivar'
-          },
-          cancel: true,
-          persistent: true
-        }).onOk(() => {
-          Loading.show()
-          db.collection('users').doc(newDni).set({ isActive: true })
-            .then(res => {
-              commit('activateUser', newDni)
-              Loading.hide()
-              resolve('Usuario reactivado con éxito.')
-            })
-            .catch(err => {
-              Loading.hide()
-              reject(err.message)
-            })
-        }).onCancel(() => {
-          reject('No se ha añadido ningún usuario.')
-        })
-      }
-    } else {
-      db.collection('users').doc(newDni).set(userData)
-        .then(res => {
-          commit('addUser', { data: userData, dni: newDni })
-          Loading.hide()
-          resolve('Usuario añadido con éxito.')
-        })
-        .catch(err => {
-          Loading.hide()
-          reject(err.message)
-        })
-    }
-  })
 }
 
 export function getAllPatients ({ commit }) {
@@ -309,7 +136,7 @@ export function addNewPatient ({ commit, state }, newPatient) {
   })
 }
 
-export function saveTimes ({ commit, state }, data) {
+export function saveTimes ({ state }, data) {
   Loading.show()
   console.log(data.times)
   state.allPatients.forEach((patient) => {
@@ -331,4 +158,23 @@ export function saveTimes ({ commit, state }, data) {
         })
     }
   })
+}
+
+export function editName ({ commit }, newName) {
+  auth.currentUser.updateProfile({
+    displayName: newName
+  })
+  commit('editName', newName)
+}
+
+export async function editEmail ({ commit }, newEmail) {
+  await auth.currentUser.updateEmail(newEmail)
+    .catch(err => {
+      Notify.create({
+        type: 'negative',
+        message: err.message
+      })
+    })
+  commit('editEmail', newEmail)
+  return auth.currentUser.sendEmailVerification()
 }

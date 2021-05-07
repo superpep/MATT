@@ -59,3 +59,11 @@ export const addPatient = (state, data) => {
 export const deletePatient = (state, numPatient) => {
   state.allPatients.splice(numPatient, 1)
 }
+
+export const editName = (state, newName) => {
+  state.user.data.displayName = newName
+}
+
+export const editEmail = (state, newEmail) => {
+  state.user.data.email = newEmail
+}

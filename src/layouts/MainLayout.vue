@@ -12,11 +12,12 @@
         />
 
         <q-toolbar-title>
-          Gestinson
+          MATT
         </q-toolbar-title>
-        <q-toolbar-subtitle>
+        <q-toolbar-subtitle v-if="userName == null">
           {{currentDate}}
         </q-toolbar-subtitle>
+        <q-btn to="/edit-profile" flat v-else :label='userName' icon='account_circle'/>
 
       </q-toolbar>
     </q-header>
@@ -46,11 +47,13 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+    <!-- Por ahora no interesa footer así que lo dejamos comentado
     <q-footer elevated>
       <q-toolbar v-if="userName != null" >
         <q-toolbar-title style="padding-right: 10px" class="text-h6 absolute-right">Conectado como: {{ userName }}</q-toolbar-title>
       </q-toolbar>
     </q-footer>
+    -->
   </q-layout>
 </template>
 
@@ -80,12 +83,6 @@ const LoggedInLinks = [
     caption: 'Página principal',
     icon: 'home',
     link: '/#/index'
-  },
-  {
-    title: 'Gestión de usuarios',
-    caption: 'Añade, elimina o edita los usuarios',
-    icon: 'account_circle',
-    link: '/#/user-management'
   },
   {
     title: 'Gestión de pacientes',
