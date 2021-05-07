@@ -127,8 +127,8 @@ module.exports = function (/* ctx */) {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: 'Gestinson',
-        short_name: 'Gestinson',
+        name: 'Motor Assessment Timed Test',
+        short_name: 'MATT',
         description: 'Sistema gestor de pacientes con parkinson para la universidad de Alicante (UA)',
         display: 'standalone',
         orientation: 'portrait',
