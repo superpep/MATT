@@ -1,4 +1,7 @@
 export default {
+  edit: 'Editar',
+  cancel: 'Cancelar',
+  save_changes: 'Guardar cambios',
   language: 'Idioma',
   english: 'Inglés',
   spanish: 'Español',
@@ -13,5 +16,11 @@ export default {
   err_pass_no_match: 'Las contraseñas no coinciden',
   register_button: 'Registrarse',
   verify_before_login: 'Debes verificar tu correo antes de iniciar sesión',
-  check_email_validation: '¡Registrado con éxito! Verifica tu correo antes de iniciar sesión.'
+  check_email_validation: '¡Registrado con éxito! Verifica tu correo antes de iniciar sesión.',
+  check_newEmail_validation: '¡Correo modificado! Verifícalo antes de volver a iniciar sesión.',
+  name_change_successful: 'Se ha modificado el nombre.',
+  reset_password_sent: 'Se ha enviado un correo para restablecer la contraseña. Por favor, revisa tu bandeja de entrada.',
+  edit_profile: 'Editar perfil',
+  edit_password: 'Editar contraseña',
+  confirm_password_change: 'Por motivos de seguridad se enviará un enlace a tu correo para que restablezcas la contraseña desde ahí. ¿Deseas continuar?'
 }
