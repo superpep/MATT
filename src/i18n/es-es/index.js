@@ -1,4 +1,5 @@
 export default {
+  login: 'Inicio de sesión',
   edit: 'Editar',
   cancel: 'Cancelar',
   save_changes: 'Guardar cambios',
@@ -14,7 +15,11 @@ export default {
   err_not_valid_email: 'Introduce un correo válido',
   err_pass_too_short: 'La contraseña es demasiado corta',
   err_pass_no_match: 'Las contraseñas no coinciden',
+  err_pass_no_empty: 'Debes introducir una contraseña',
+  keep_login: 'Mantener sesión iniciada',
+  lost_pass: '¿Has olvidado la contraseña?',
   register_button: 'Registrarse',
+  login_button: 'Iniciar sesión',
   verify_before_login: 'Debes verificar tu correo antes de iniciar sesión',
   check_email_validation: '¡Registrado con éxito! Verifica tu correo antes de iniciar sesión.',
   check_newEmail_validation: '¡Correo modificado! Verifícalo antes de volver a iniciar sesión.',

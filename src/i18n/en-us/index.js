@@ -2,6 +2,7 @@
 // so you can safely delete all default props below
 
 export default {
+  login: 'Login',
   edit: 'Edit',
   cancel: 'Cancel',
   save_changes: 'Save changes',
@@ -17,7 +18,11 @@ export default {
   err_not_valid_email: 'Write a valid e-mail',
   err_pass_too_short: 'Password too short/weak',
   err_pass_no_match: 'Passwords do not match',
+  err_pass_no_empty: 'You must provide a password',
+  keep_login: 'Keep me signed in',
+  lost_pass: 'Forgot your password?',
   register_button: 'Register',
+  login_button: 'Login',
   verify_before_login: 'You must verify your e-mail before logging in',
   check_email_validation: 'Successfully registered! Verify your email before logging in.',
   check_newEmail_validation: 'Successfully modified e-mail! Please verify it before logging in again.',
