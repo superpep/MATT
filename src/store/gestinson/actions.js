@@ -137,14 +137,14 @@ export function addNewPatient ({ commit, state }, newPatient) {
   })
 }
 
-export function saveTimes ({ state }, data) {
+export function saveTimes ({ state, commit }, data) {
   Loading.show()
-  console.log(data.times)
   state.allPatients.forEach((patient) => {
     if (patient.innerId === data.innerId) {
       db.collection('patients').doc(data.innerId).update({ lap_times: firebase.firestore.FieldValue.arrayUnion(data.times) })
         .then(res => {
           Loading.hide()
+          commit('addLapTimes', data)
           Notify.create({
             type: 'positive',
             message: 'Tiempos guardados correctamente.'

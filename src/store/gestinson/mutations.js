@@ -70,3 +70,14 @@ export const editName = (state, newName) => {
 export const editEmail = (state, newEmail) => {
   state.user.data.email = newEmail
 }
+
+export const addLapTimes = (state, data) => {
+  state.allPatients.forEach(patient => {
+    if (patient.innerId === data.innerId) {
+      if (patient.lap_times === undefined) {
+        patient.lap_times = []
+      }
+      patient.lap_times.push(data.times)
+    }
+  })
+}

@@ -23,7 +23,9 @@ export default {
     if (!navigator.onLine) {
       // NO HAY CONEXIÓN A INTERNET
     }
-    return store.dispatch('gestinson/getAllPatients')
+    if (!store.state.gestinson.allPatients.length) {
+      return store.dispatch('gestinson/getAllPatients')
+    }
   },
   data () {
     return {
