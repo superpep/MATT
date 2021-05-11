@@ -19,13 +19,11 @@ import PatientForm from 'components/PatientForm.vue'
 import PatientGraph from 'components/PatientGraph.vue'
 
 export default {
-  preFetch ({ store, redirect }) {
+  preFetch ({ store }) {
     if (!navigator.onLine) {
       // NO HAY CONEXIÓN A INTERNET
     }
-    if (!store.state.gestinson.allPatients.length) { // Si el array de pacientes está vacío..
-      return store.dispatch('gestinson/getAllPatients')
-    }
+    return store.dispatch('gestinson/getAllPatients')
   },
   data () {
     return {
