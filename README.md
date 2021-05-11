@@ -1,6 +1,6 @@
-# Gestinson (gestinson)
+# MATT (Motor Assessment Timed Test)
 
-Sistema gestor de pacientes con parkinson para la universidad de Alicante (UA)
+Motor Assessment Timed Test (MATT) para la universidad de Alicante (UA)
 
 ## Install & use
 
