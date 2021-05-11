@@ -60,6 +60,9 @@ export const deletePatient = (state, numPatient) => {
   state.allPatients.splice(numPatient, 1)
 }
 
+export const removePatients = (state) => {
+  state.allPatients = []
+}
 export const editName = (state, newName) => {
   state.user.data.displayName = newName
 }

@@ -73,6 +73,7 @@ export function saveSegmentTimes ({ commit, state }, data) {
 
 export function getAllPatients ({ commit }) {
   Loading.show()
+  commit('removePatients')
   return db.collection('patients').get()
     .then((res) => {
       return new Promise((resolve, reject) => {
