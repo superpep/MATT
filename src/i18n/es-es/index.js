@@ -27,5 +27,13 @@ export default {
   reset_password_sent: 'Se ha enviado un correo para restablecer la contraseña. Por favor, revisa tu bandeja de entrada.',
   edit_profile: 'Editar perfil',
   edit_password: 'Editar contraseña',
-  confirm_password_change: 'Por motivos de seguridad se enviará un enlace a tu correo para que restablezcas la contraseña desde ahí. ¿Deseas continuar?'
+  confirm_password_change: 'Por motivos de seguridad se enviará un enlace a tu correo para que restablezcas la contraseña desde ahí. ¿Deseas continuar?',
+  show_video: 'Mostrar vídeo',
+  hide_video: 'Esconder vídeo',
+  click_to_select_video: 'Pulsa para seleccionar un vídeo',
+  remove_video: 'Quitar vídeo',
+  gait: 'Marcha',
+  balance: 'Equilibrio',
+  dual_task: 'Doble tarea',
+  warning_select_patient: 'Primero debes seleccionar un paciente'
 }

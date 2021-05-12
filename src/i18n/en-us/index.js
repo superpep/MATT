@@ -30,5 +30,19 @@ export default {
   reset_password_sent: 'An email has been sent to reset your password, please check your inbox.',
   edit_profile: 'Edit profile',
   edit_password: 'Edit password',
-  confirm_password_change: 'For security reasons, a link will be sent to your email in order to reset the password from there. Do you want to continue?'
+  confirm_password_change: 'For security reasons, a link will be sent to your email in order to reset the password from there. Do you want to continue?',
+  show_video: 'Show video',
+  hide_video: 'Hide video',
+  click_to_select_video: 'Click to select a video',
+  remove_video: 'Remove video',
+  gait: 'Gait',
+  balance: 'Balance',
+  dual_task: 'Dual task',
+  select_patient: 'Select a patient',
+  total_time: 'Total time',
+  start: 'Start',
+  save_times: 'Save times',
+  register_time: 'Register time',
+  start_again: 'Start again',
+  warning_select_patient: 'You must first select a patient'
 }
