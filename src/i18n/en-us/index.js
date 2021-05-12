@@ -44,5 +44,7 @@ export default {
   save_times: 'Save times',
   register_time: 'Register time',
   start_again: 'Start again',
-  warning_select_patient: 'You must first select a patient'
+  warning_select_patient: 'You must first select a patient',
+  err_404: 'Oops. There is nothing here...',
+  return: 'Return'
 }

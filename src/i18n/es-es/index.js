@@ -35,5 +35,7 @@ export default {
   gait: 'Marcha',
   balance: 'Equilibrio',
   dual_task: 'Doble tarea',
-  warning_select_patient: 'Primero debes seleccionar un paciente'
+  warning_select_patient: 'Primero debes seleccionar un paciente',
+  err_404: 'Oops. No hay nada aqui...',
+  return: 'Volver'
 }

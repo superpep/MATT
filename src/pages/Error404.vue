@@ -6,7 +6,7 @@
       </div>
 
       <div class="text-h2" style="opacity:.4">
-        Oops. No hay nada aqui...
+        {{ $t('err_404') }}
       </div>
 
       <q-btn
@@ -15,7 +15,7 @@
         text-color="blue"
         unelevated
         to="/index"
-        label="Volver"
+        :label="$t('return')"
         no-caps
       />
     </div>
