@@ -7,14 +7,14 @@ import { auth } from 'boot/firebase'
 import { Notify } from 'quasar'
 export default {
   name: 'signout',
-  async preFetch ({ redirect }) {
+  async created () {
     try {
       await auth.signOut()
       Notify.create({
         type: 'positive',
         message: this.$t('signout_ok')
       })
-      redirect({ name: 'login' })
+      this.$router.push({ name: 'login' })
     } catch (err) {
       Notify.create({
         type: 'negative',
