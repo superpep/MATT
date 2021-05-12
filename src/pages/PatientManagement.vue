@@ -2,7 +2,7 @@
   <q-page class="bg-secondary items-center">
     <div v-if="!addingPatient && !showingPatientGraph">
       <PatientList @edit-patient='editPatient' @show-patient-graph='showPatientGraph'/>
-      <q-btn push round @click="cambiarEstado()" style="margin-left: 50%;" class="float-center" color="primary" icon="add" title="Crear usuario" />
+      <q-btn push round @click="cambiarEstado()" style="margin-left: 50%;" class="float-center" color="primary" icon="add" :title="$t('create_patient')" />
     </div>
     <div v-else-if="addingPatient && !showingPatientGraph">
       <PatientForm @cambiar-estado='cambiarEstado()' :patientNumberToEdit="patientNumberToEdit"/>

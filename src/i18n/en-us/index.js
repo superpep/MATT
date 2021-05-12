@@ -47,5 +47,6 @@ export default {
   warning_select_patient: 'You must first select a patient',
   err_404: 'Oops. There is nothing here...',
   return: 'Return',
-  signout_ok: 'Session closed'
+  signout_ok: 'Session closed',
+  create_patient: 'Register patient'
 }

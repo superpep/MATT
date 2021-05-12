@@ -38,5 +38,6 @@ export default {
   warning_select_patient: 'Primero debes seleccionar un paciente',
   err_404: 'Oops. No hay nada aqui...',
   return: 'Volver',
-  signout_ok: 'Se ha cerrado la sesión'
+  signout_ok: 'Se ha cerrado la sesión',
+  create_patient: 'Dar de alta un paciente'
 }
