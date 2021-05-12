@@ -71,10 +71,10 @@ export function saveSegmentTimes ({ commit, state }, data) {
   }
 }
 
-export function getAllPatients ({ commit }) {
+export function getAllPatients ({ commit, state }) {
   Loading.show()
   commit('removePatients')
-  return db.collection('patients').get()
+  return db.collection('patients').where('responsible_user', '==', state.user.data.uid).get()
     .then((res) => {
       return new Promise((resolve, reject) => {
         res.forEach(element => {

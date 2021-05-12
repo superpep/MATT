@@ -299,7 +299,8 @@ export default {
         tel: '',
         weight: null,
         body_fat: null,
-        join_date: new Date().toISOString().split('T')[0] // Día de hoy en formato ISO
+        join_date: new Date().toISOString().split('T')[0], // Día de hoy en formato ISO
+        responsible_user: this.$store.state.gestinson.user.data.uid
       }
     }
   },
