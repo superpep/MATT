@@ -1,11 +1,19 @@
 <template>
   <q-page class="bg-secondary row justify-center items-center">
-    <StopWatch/>
+    <div class="text-center">
+      <StopWatch/>
+      <q-btn v-if="!showVideo" @click="toggleVideo" icon="visibility" color="primary" :label="$t('show_video')"/>
+      <div v-else>
+        <q-btn @click="toggleVideo" icon="visibility_off" color="primary" :label="$t('hide_video')"/>
+        <VideoPlayer/>
+      </div>
+    </div>
   </q-page>
 </template>
 
 <script>
 import StopWatch from 'components/StopWatch.vue'
+import VideoPlayer from 'components/VideoPlayer.vue'
 
 export default {
   preFetch ({ store }) {
@@ -16,6 +24,16 @@ export default {
     }
   },
   name: 'MainPage',
-  components: { StopWatch }
+  data () {
+    return {
+      showVideo: false
+    }
+  },
+  methods: {
+    toggleVideo () {
+      this.showVideo = !this.showVideo
+    }
+  },
+  components: { StopWatch, VideoPlayer }
 }
 </script>
