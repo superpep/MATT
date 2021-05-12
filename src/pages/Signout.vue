@@ -12,7 +12,7 @@ export default {
       await auth.signOut()
       Notify.create({
         type: 'positive',
-        message: 'Se ha cerrado la sesión'
+        message: this.$t('signout_ok')
       })
       redirect({ name: 'login' })
     } catch (err) {

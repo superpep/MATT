@@ -37,5 +37,6 @@ export default {
   dual_task: 'Doble tarea',
   warning_select_patient: 'Primero debes seleccionar un paciente',
   err_404: 'Oops. No hay nada aqui...',
-  return: 'Volver'
+  return: 'Volver',
+  signout_ok: 'Se ha cerrado la sesión'
 }
