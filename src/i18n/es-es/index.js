@@ -1,5 +1,14 @@
 export default {
+  main_page: 'Página principal',
+  main_page_caption: 'Realízale la prueba MAT a un paciente en directo o mediante un vídeo',
+  patient_management: 'Gestión de pacientes',
+  patient_management_caption: 'Añade, elimina, edita, visualiza las gráficas de tus pacientes o descarga sus resultados.',
+  settings: 'Ajustes',
+  settings_caption: 'Visualiza o edita los tiempos de corte',
+  logout: 'Cerrar sesión',
+  logout_caption: 'Cierra sesión de tu cuenta actual',
   login: 'Inicio de sesión',
+  login_caption: 'Inicia sesión en tu cuenta',
   edit: 'Editar',
   cancel: 'Cancelar',
   save_changes: 'Guardar cambios',
@@ -7,6 +16,7 @@ export default {
   english: 'Inglés',
   spanish: 'Español',
   register: 'Registro',
+  register_caption: 'Crea un nuevo usuario',
   full_name: 'Nombre completo',
   email: 'Correo electrónico',
   password: 'Contraseña',
@@ -39,5 +49,6 @@ export default {
   err_404: 'Oops. No hay nada aqui...',
   return: 'Volver',
   signout_ok: 'Se ha cerrado la sesión',
-  create_patient: 'Dar de alta un paciente'
+  create_patient: 'Dar de alta un paciente',
+  interest_links: 'Enlaces de interés'
 }

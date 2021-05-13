@@ -2,7 +2,16 @@
 // so you can safely delete all default props below
 
 export default {
+  main_page: 'Main page',
+  main_page_caption: 'Take the MAT test on a patient live or by uploading a video',
+  patient_management: 'Patient management',
+  patient_management_caption: 'Add, delete, edit, view your patients\' graphs or download their results.',
+  settings: 'Settings',
+  settings_caption: 'View or edit the cutoff times',
+  logout: 'Log out',
+  logout_caption: 'Logs you out from your current session',
   login: 'Login',
+  login_caption: 'Login to your account',
   edit: 'Edit',
   cancel: 'Cancel',
   save_changes: 'Save changes',
@@ -10,6 +19,7 @@ export default {
   english: 'English',
   spanish: 'Spanish',
   register: 'Register',
+  register_caption: 'Create a new user',
   full_name: 'Full name',
   email: 'E-mail',
   password: 'Password',
@@ -48,5 +58,6 @@ export default {
   err_404: 'Oops. There is nothing here...',
   return: 'Return',
   signout_ok: 'Session closed',
-  create_patient: 'Register patient'
+  create_patient: 'Register patient',
+  interest_links: 'Links of interest'
 }

@@ -15,7 +15,7 @@
           MATT
         </q-toolbar-title>
         <q-toolbar-subtitle v-if="userName == null">
-          {{currentDate}}
+          Motor Assessment Timed Test
         </q-toolbar-subtitle>
         <q-btn to="/edit-profile" flat v-else :label='userName' icon='account_circle'/>
 
@@ -33,7 +33,7 @@
           header
           class="text-grey-8"
         >
-          Enlaces de interés
+          {{ $t('interest_links') }}
         </q-item-label>
         <EssentialLink
           v-for="link in essentialLinks"
@@ -60,59 +60,60 @@
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
 import LanguageSelector from 'components/LanguageSelector.vue'
-import { date } from 'quasar'
-
-const notLoggedInLinks = [
-  {
-    title: 'Iniciar sesión',
-    caption: 'Inicio de sesión',
-    icon: 'login',
-    link: '/#/login'
-  },
-  {
-    title: 'Registro',
-    caption: 'Crea un nuevo usuario',
-    icon: 'person_add',
-    link: '/#/register'
-  }
-]
-
-const LoggedInLinks = [
-  {
-    title: 'Índice',
-    caption: 'Página principal',
-    icon: 'home',
-    link: '/#/index'
-  },
-  {
-    title: 'Gestión de pacientes',
-    caption: 'Añade, elimina, edita o visualiza las gráficas de los pacientes',
-    icon: 'accessibility',
-    link: '/#/patient-management'
-  },
-  {
-    title: 'Ajustes',
-    caption: 'Edita los tiempos de corte',
-    icon: 'settings',
-    link: '/#/settings'
-  },
-  {
-    title: 'Cerrar sesión',
-    caption: 'Para mantener la sesión abierta tendrás que volver a iniciar sesión y marcar la casilla',
-    icon: 'logout',
-    link: '/#/signout'
-  }
-]
 
 export default {
   name: 'MainLayout',
+  data () {
+    return {
+      LoggedInLinks: [
+        {
+          title: this.$t('main_page'),
+          caption: this.$t('main_page_caption'),
+          icon: 'home',
+          link: '/#/index'
+        },
+        {
+          title: this.$t('patient_management'),
+          caption: this.$t('patient_management_caption'),
+          icon: 'accessibility',
+          link: '/#/patient-management'
+        },
+        {
+          title: this.$t('settings'),
+          caption: this.$t('settings_caption'),
+          icon: 'settings',
+          link: '/#/settings'
+        },
+        {
+          title: this.$t('logout'),
+          caption: this.$t('logout_caption'),
+          icon: 'logout',
+          link: '/#/signout'
+        }
+      ],
+      notLoggedInLinks: [
+        {
+          title: this.$t('login'),
+          caption: this.$t('login_caption'),
+          icon: 'login',
+          link: '/#/login'
+        },
+        {
+          title: this.$t('register'),
+          caption: this.$t('register_caption'),
+          icon: 'person_add',
+          link: '/#/register'
+        }
+      ]
+    }
+  },
   components: { EssentialLink, LanguageSelector },
   computed: {
     essentialLinks () { // Una vez tengamos el store, aquí comprobaremos si ya estamos logueados y devolveremos una lista u otra, ya que no siempre vamos a querer los mismos enlaces.
       if (this.$store.state.gestinson.user.loggedIn) {
-        return LoggedInLinks
+        return this.LoggedInLinks
       } else {
-        return notLoggedInLinks
+        return this.notLoggedInLinks
       }
     },
     userName () {
@@ -121,10 +122,6 @@ export default {
       } else {
         return null
       }
-    },
-    currentDate () {
-      const timeStamp = Date.now()
-      return date.formatDate(timeStamp, 'dddd, DD') + ' de ' + date.formatDate(timeStamp, 'MMMM') + ' de ' + date.formatDate(timeStamp, 'YYYY')
     },
     drawerState: {
       get () {
