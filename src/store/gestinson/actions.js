@@ -38,37 +38,33 @@ export function getSegmentTimes ({ commit }) {
 }
 
 export function saveSegmentTimes ({ commit, state }, data) {
-  if (state.user.isAdmin) {
-    Loading.show()
-    const newData = {}
-    newData.id = state.segment_times.id + 1
-    newData.seg1_max_time = data[0].max
-    newData.seg1_min_time = data[0].min
-    newData.seg2_max_time = data[1].max
-    newData.seg2_min_time = data[1].min
-    newData.seg3_max_time = data[2].max
-    newData.seg3_min_time = data[2].min
-    newData.total_max_time = data[3].max
-    newData.total_min_time = data[3].min
-    db.collection('segment_times').add(newData)
-      .then(res => {
-        commit('addSegmentTime', { data: newData, innerId: res.id })
-        Notify.create({
-          type: 'positive',
-          message: 'Tiempos de corte guardados correctamente.'
-        })
-        Loading.hide()
+  Loading.show()
+  const newData = {}
+  newData.id = state.segment_times.id + 1
+  newData.seg1_max_time = data[0].max
+  newData.seg1_min_time = data[0].min
+  newData.seg2_max_time = data[1].max
+  newData.seg2_min_time = data[1].min
+  newData.seg3_max_time = data[2].max
+  newData.seg3_min_time = data[2].min
+  newData.total_max_time = data[3].max
+  newData.total_min_time = data[3].min
+  db.collection('segment_times').add(newData)
+    .then(res => {
+      commit('addSegmentTime', { data: newData, innerId: res.id })
+      Notify.create({
+        type: 'positive',
+        message: this.$t('cutoff_saved')
       })
-      .catch(err => {
-        Notify.create({
-          type: 'negative',
-          message: err.message
-        })
-        Loading.hide()
+      Loading.hide()
+    })
+    .catch(err => {
+      Notify.create({
+        type: 'negative',
+        message: err.message
       })
-  } else {
-    return new Promise((resolve, reject) => { reject('Para cambiar los ajustes de tiempo debes ser un usuario administrador.') })
-  }
+      Loading.hide()
+    })
 }
 
 export function getAllPatients ({ commit, state }) {
@@ -101,7 +97,7 @@ export function deletePatient ({ state, commit }, numPatient) {
       Loading.hide()
       Notify.create({
         type: 'positive',
-        message: 'El paciente ha sido eliminado.'
+        message: this.$t('patient_deleted')
       })
     })
     .catch(err => {
@@ -120,14 +116,14 @@ export function addNewPatient ({ commit, state }, newPatient) {
     const patientExists = state.allPatients.filter(patient => patient.dni === newPatient.dni || patient.sip === newPatient.sip)
     if (patientExists.length) {
       Loading.hide()
-      reject('Ya hay un paciente con ese DNI / SIP')
+      reject(this.$t('patient_already_exists'))
     } else {
       db.collection('patients').add(newPatient)
         .then(res => {
           console.log(res)
           commit('addPatient', { data: newPatient, innerId: res.id })
           Loading.hide()
-          resolve('Paciente añadido con éxito.')
+          resolve(this.$t('patient_added'))
         })
         .catch(err => {
           Loading.hide()
@@ -147,7 +143,7 @@ export function saveTimes ({ state, commit }, data) {
           commit('addLapTimes', data)
           Notify.create({
             type: 'positive',
-            message: 'Tiempos guardados correctamente.'
+            message: this.$t('times_saved')
           })
         })
         .catch(err => {

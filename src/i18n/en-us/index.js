@@ -73,5 +73,10 @@ export default {
   revert_changes: 'Revert changes',
   max: 'Maximum',
   min: 'Minimum',
-  error: 'Error'
+  error: 'Error',
+  cutoff_saved: 'Cutoff times saved successfully',
+  patient_deleted: 'The patient has been deleted',
+  patient_already_exists: 'There is already a patient with that DNI / SIP',
+  patient_added: 'The patient has been added successfully',
+  times_saved: 'Test saved successfully'
 }

@@ -64,5 +64,10 @@ export default {
   revert_changes: 'Revertir cambios',
   max: 'Máximo',
   min: 'Mínimo',
-  error: 'Error'
+  error: 'Error',
+  cutoff_saved: 'Tiempos de corte guardados correctamente.',
+  patient_deleted: 'El paciente ha sido eliminado',
+  patient_already_exists: 'Ya existe un paciente con ese DNI / SIP',
+  patient_added: 'El paciente ha sido añadido',
+  times_saved: 'Prueba guardada'
 }
