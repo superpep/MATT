@@ -29,6 +29,8 @@ export default {
   err_pass_too_short: 'Password too short/weak',
   err_pass_no_match: 'Passwords do not match',
   err_pass_no_empty: 'You must provide a password',
+  err_number_less_zero: 'Value must be greater or equal to zero',
+  err_no_valid_number: 'Number must be valid',
   keep_login: 'Keep me signed in',
   lost_pass: 'Forgot your password?',
   register_button: 'Register',
@@ -65,5 +67,11 @@ export default {
   show_graphs: 'Show graphs',
   delete: 'Delete',
   confirm_delete: 'Are you sure you want to delete the patient ',
-  csv_headers: 'Date,Gait,Balance,Dual task,Total,Instructor\n'
+  csv_headers: 'Date,Gait,Balance,Dual task,Total,Instructor\n',
+  cutoff_times: 'Cutoff times',
+  save: 'Save',
+  revert_changes: 'Revert changes',
+  max: 'Maximum',
+  min: 'Minimum',
+  error: 'Error'
 }

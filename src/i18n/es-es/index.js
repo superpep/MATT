@@ -26,6 +26,8 @@ export default {
   err_pass_too_short: 'La contraseña es demasiado corta',
   err_pass_no_match: 'Las contraseñas no coinciden',
   err_pass_no_empty: 'Debes introducir una contraseña',
+  err_number_less_zero: 'El número debe ser mayor o igual a 0',
+  err_no_valid_number: 'Introduce un número válido',
   keep_login: 'Mantener sesión iniciada',
   lost_pass: '¿Has olvidado la contraseña?',
   register_button: 'Registrarse',
@@ -56,5 +58,11 @@ export default {
   show_graphs: 'Mostrar gráficas',
   delete: 'Eliminar',
   confirm_delete: '¿Estás seguro de querer eliminar al paciente ',
-  csv_headers: 'Fecha,Marcha,Equilibrio,Doble tarea,Total,Instructor\n'
+  csv_headers: 'Fecha,Marcha,Equilibrio,Doble tarea,Total,Instructor\n',
+  cutoff_times: 'Tiempos de corte',
+  save: 'Guardar',
+  revert_changes: 'Revertir cambios',
+  max: 'Máximo',
+  min: 'Mínimo',
+  error: 'Error'
 }

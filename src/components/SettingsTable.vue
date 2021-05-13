@@ -3,7 +3,7 @@
     <q-table
         :data="data"
         :columns="columns"
-        title="Tiempos de corte"
+        :title="$t('cutoff_times')"
         row-key="name"
       >
         <template v-slot:body="props">
@@ -27,46 +27,17 @@
         </template>
       </q-table>
       <div v-if="changesMade">
-        <q-btn class="button_margin float-right" color="primary" icon-right="save" @click='guardar' label="Guardar" />
-        <q-btn class="button_margin float-left" color="primary" icon="replay" @click='revertirCambios' label="Revertir cambios" />
+        <q-btn class="button_margin float-right" color="primary" icon-right="save" @click='guardar' :label="$t('save')" />
+        <q-btn class="button_margin float-left" color="primary" icon="replay" @click='revertirCambios' :label="$t('revert_changes')" />
       </div>
       <div v-else>
-        <q-btn disabled class="button_margin float-right" color="grey" icon-right="save" label="Guardar" />
-        <q-btn disabled class="button_margin float-left" color="grey" icon="replay" label="Revertir cambios" />
+        <q-btn disabled class="button_margin float-right" color="grey" icon-right="save" :label="$t('save')" />
+        <q-btn disabled class="button_margin float-left" color="grey" icon="replay" :label="$t('revert_changes')" />
       </div>
     </div>
 </template>
 <script>
 import { Notify } from 'quasar'
-
-const columns = [
-  { name: 'name', align: 'left', classes: 'bg-grey-2 ellipsis text-bold', label: '', field: 'name' },
-  { name: 'max', label: 'Máximo', field: 'max' },
-  { name: 'min', label: 'Mínimo', field: 'min' }
-]
-
-const data = [
-  {
-    name: 'Marcha',
-    max: 0,
-    min: 0
-  },
-  {
-    name: 'Equilibrio',
-    max: 0,
-    min: 0
-  },
-  {
-    name: 'Doble tarea',
-    max: 0,
-    min: 0
-  },
-  {
-    name: 'Tiempo total',
-    max: 0,
-    min: 0
-  }
-]
 
 export default {
   created () {
@@ -75,17 +46,42 @@ export default {
   name: 'SettingsTable',
   data () {
     return {
-      columns,
-      data,
+      columns: [
+        { name: 'name', align: 'left', classes: 'bg-grey-2 ellipsis text-bold', label: '', field: 'name' },
+        { name: 'max', label: this.$t('max'), field: 'max' },
+        { name: 'min', label: this.$t('min'), field: 'min' }
+      ],
+      data: [
+        {
+          name: this.$t('gait'),
+          max: 0,
+          min: 0
+        },
+        {
+          name: this.$t('balance'),
+          max: 0,
+          min: 0
+        },
+        {
+          name: this.$t('dual_task'),
+          max: 0,
+          min: 0
+        },
+        {
+          name: this.$t('total_time'),
+          max: 0,
+          min: 0
+        }
+      ],
       changesMade: false,
-      msgErrorInput: 'Error',
+      msgErrorInput: this.$t('error'),
       errorInput: false
     }
   },
   methods: {
     guardar () {
       this.changesMade = false
-      this.$store.dispatch('gestinson/saveSegmentTimes', data)
+      this.$store.dispatch('gestinson/saveSegmentTimes', this.data)
         .catch(err => {
           Notify.create({
             type: 'negative',
@@ -97,12 +93,12 @@ export default {
     isNumber (val) {
       if (val < 0) {
         this.errorInput = true
-        this.msgErrorInput = 'El número tiene que ser mayor o igual a 0.'
+        this.msgErrorInput = this.$t('err_number_ge_zer')
         return false
       }
       if (!val) {
         this.errorInput = true
-        this.msgErrorInput = 'Introduce un número válido.'
+        this.msgErrorInput = this.$t('err_no_valid_number')
         return false
       }
       this.errorInput = false
