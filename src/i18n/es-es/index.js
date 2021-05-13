@@ -50,5 +50,11 @@ export default {
   return: 'Volver',
   signout_ok: 'Se ha cerrado la sesión',
   create_patient: 'Dar de alta un paciente',
-  interest_links: 'Enlaces de interés'
+  interest_links: 'Enlaces de interés',
+  download_csv: 'Descargar CSV',
+  patient_no_tests: 'El paciente no tiene datos',
+  show_graphs: 'Mostrar gráficas',
+  delete: 'Eliminar',
+  confirm_delete: '¿Estás seguro de querer eliminar al paciente ',
+  csv_headers: 'Fecha,Marcha,Equilibrio,Doble tarea,Total,Instructor\n'
 }

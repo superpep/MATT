@@ -4,21 +4,20 @@
       <q-item v-for="(patient, numPatient) in patients" :key="patient.innerId" class="q-my-sm" clickable v-ripple>
         <q-item-section>
           <q-item-label>{{ fullName(patient) }}</q-item-label>
-          <q-item-label caption lines="2">{{ getIllnessFase(numPatient) }}</q-item-label>
-          <q-item-label caption lines="2">{{ patient.mail }}</q-item-label>
+          <q-item-label caption lines="1">{{ patient.mail }}</q-item-label>
         </q-item-section>
 
         <q-item-section side>
           <div>
-            <q-btn v-if="patient.lap_times !== undefined" @click="downloadCSVData(patient)" title="Descargar CSV" flat round icon="download" color="blue" />
-            <q-btn v-else disabled @click="downloadCSVData(patient)" title="No se ha realizado ninguna prueba" flat round icon="download" color="blue" />
+            <q-btn v-if="patient.lap_times !== undefined" @click="downloadCSVData(patient)" :title="$t('download_csv')" flat round icon="download" color="blue" />
+            <q-btn v-else disabled @click="downloadCSVData(patient)" :title="$t('patient_no_tests')" flat round icon="download" color="blue" />
 
-            <q-btn v-if="patient.lap_times !== undefined" @click="showGraph(patient)" title="Mostrar gráficas" flat round icon="assessment" color="purple" />
-            <q-btn v-else title="No se ha realizado ninguna prueba" disabled @click="showGraph(patient)" flat round icon="assessment" color="purple" />
+            <q-btn v-if="patient.lap_times !== undefined" @click="showGraph(patient)" :title="$t('show_graphs')" flat round icon="assessment" color="purple" />
+            <q-btn v-else :title="$t('patient_no_tests')" disabled @click="showGraph(patient)" flat round icon="assessment" color="purple" />
 
-            <q-btn @click="edit(numPatient)" title="Editar" flat round icon="create" color="green" />
+            <q-btn @click="edit(numPatient)" title="$t('edit')" flat round icon="create" color="green" />
 
-            <q-btn @click="confirmDelete(numPatient)" title="Eliminar" flat round icon="delete" color="red" />
+            <q-btn @click="confirmDelete(numPatient)" :title="$t('delete')" flat round icon="delete" color="red" />
           </div>
         </q-item-section>
       </q-item>
@@ -33,10 +32,10 @@ export default {
   methods: {
     confirmDelete (numPatient) {
       this.$q.dialog({
-        message: '¿Estás seguro de querer eliminar al usuario ' + this.fullName(this.patients[numPatient]) + '?',
+        message: this.$t('confirm_delete') + this.fullName(this.patients[numPatient]) + '?',
         ok: {
           push: true,
-          label: 'Eliminar'
+          label: this.$t('delete')
         },
         cancel: true
       }).onOk(() => {
@@ -49,18 +48,11 @@ export default {
     edit (numPatient) {
       this.$emit('edit-patient', numPatient)
     },
-    getIllnessFase (numPatient) {
-      if (this.patients[numPatient].illness_fase === null) {
-        return ''
-      } else {
-        return 'Estadio ' + this.patients[numPatient].illness_fase
-      }
-    },
     fullName (patient) {
       return patient.name + ' ' + (patient.surname === null ? '' : patient.surname)
     },
     downloadCSVData (patient) {
-      let csv = 'Fecha,Marcha,Equilibrio,Doble Tarea,Total,Instructor\n'
+      let csv = this.$t('csv_headers')
       patient.lap_times.forEach((row) => {
         csv += row.fecha + ',' + row.lap1 + ',' + row.lap2 + ',' + row.lap3 + ',' + row.total + ',' + row.instructor_prueba + '\n'
       })

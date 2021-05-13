@@ -59,5 +59,11 @@ export default {
   return: 'Return',
   signout_ok: 'Session closed',
   create_patient: 'Register patient',
-  interest_links: 'Links of interest'
+  interest_links: 'Links of interest',
+  download_csv: 'Download CSV',
+  patient_no_tests: 'This patient has no data',
+  show_graphs: 'Show graphs',
+  delete: 'Delete',
+  confirm_delete: 'Are you sure you want to delete the patient ',
+  csv_headers: 'Date,Gait,Balance,Dual task,Total,Instructor\n'
 }
