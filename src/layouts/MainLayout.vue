@@ -63,57 +63,51 @@ import LanguageSelector from 'components/LanguageSelector.vue'
 
 export default {
   name: 'MainLayout',
-  data () {
-    return {
-      LoggedInLinks: [
-        {
-          title: this.$t('main_page'),
-          caption: this.$t('main_page_caption'),
-          icon: 'home',
-          link: '/#/index'
-        },
-        {
-          title: this.$t('patient_management'),
-          caption: this.$t('patient_management_caption'),
-          icon: 'accessibility',
-          link: '/#/patient-management'
-        },
-        {
-          title: this.$t('settings'),
-          caption: this.$t('settings_caption'),
-          icon: 'settings',
-          link: '/#/settings'
-        },
-        {
-          title: this.$t('logout'),
-          caption: this.$t('logout_caption'),
-          icon: 'logout',
-          link: '/#/signout'
-        }
-      ],
-      notLoggedInLinks: [
-        {
-          title: this.$t('login'),
-          caption: this.$t('login_caption'),
-          icon: 'login',
-          link: '/#/login'
-        },
-        {
-          title: this.$t('register'),
-          caption: this.$t('register_caption'),
-          icon: 'person_add',
-          link: '/#/register'
-        }
-      ]
-    }
-  },
   components: { EssentialLink, LanguageSelector },
   computed: {
     essentialLinks () { // Una vez tengamos el store, aquí comprobaremos si ya estamos logueados y devolveremos una lista u otra, ya que no siempre vamos a querer los mismos enlaces.
       if (this.$store.state.gestinson.user.loggedIn) {
-        return this.LoggedInLinks
+        return [
+          {
+            title: this.$t('main_page'),
+            caption: this.$t('main_page_caption'),
+            icon: 'home',
+            link: '/#/index'
+          },
+          {
+            title: this.$t('patient_management'),
+            caption: this.$t('patient_management_caption'),
+            icon: 'accessibility',
+            link: '/#/patient-management'
+          },
+          {
+            title: this.$t('settings'),
+            caption: this.$t('settings_caption'),
+            icon: 'settings',
+            link: '/#/settings'
+          },
+          {
+            title: this.$t('logout'),
+            caption: this.$t('logout_caption'),
+            icon: 'logout',
+            link: '/#/signout'
+          }
+        ]
       } else {
-        return this.notLoggedInLinks
+        return [
+          {
+            title: this.$t('login'),
+            caption: this.$t('login_caption'),
+            icon: 'login',
+            link: '/#/login'
+          },
+          {
+            title: this.$t('register'),
+            caption: this.$t('register_caption'),
+            icon: 'person_add',
+            link: '/#/register'
+          }
+        ]
       }
     },
     userName () {
