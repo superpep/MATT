@@ -1,6 +1,3 @@
-// This is just an example,
-// so you can safely delete all default props below
-
 export default {
   main_page: 'Main page',
   main_page_caption: 'Take the MAT test on a patient live or by uploading a video',
