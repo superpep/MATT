@@ -72,25 +72,25 @@ export default {
             title: this.$t('main_page'),
             caption: this.$t('main_page_caption'),
             icon: 'home',
-            link: '/#/index'
+            link: '/index'
           },
           {
             title: this.$t('patient_management'),
             caption: this.$t('patient_management_caption'),
             icon: 'accessibility',
-            link: '/#/patient-management'
+            link: '/patient-management'
           },
           {
             title: this.$t('settings'),
             caption: this.$t('settings_caption'),
             icon: 'settings',
-            link: '/#/settings'
+            link: '/settings'
           },
           {
             title: this.$t('logout'),
             caption: this.$t('logout_caption'),
             icon: 'logout',
-            link: '/#/signout'
+            link: '/signout'
           }
         ]
       } else {
@@ -99,13 +99,13 @@ export default {
             title: this.$t('login'),
             caption: this.$t('login_caption'),
             icon: 'login',
-            link: '/#/login'
+            link: '/login'
           },
           {
             title: this.$t('register'),
             caption: this.$t('register_caption'),
             icon: 'person_add',
-            link: '/#/register'
+            link: '/register'
           }
         ]
       }

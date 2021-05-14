@@ -3,7 +3,7 @@
     clickable
     tag="a"
     target="_self"
-    :href="link"
+    :to="link"
   >
   <!-- el target="_self" es para abrir en la misma página. Para abrir en una nueva página utilizamos target="_blank" -->
     <q-item-section
