@@ -10,7 +10,17 @@
       />
       <h4 v-if="current_lap == 3" class="text-h4 text-white q-my-md" id="time" >{{ $t('total_time') }}:</h4>
       <h2 v-if="current_lap < 3" class="text-h2 text-white q-my-md text-center" id="time" v-html="time"></h2>
-      <span v-else v-html="total_time"></span>
+      <h2
+      v-else
+      :class="[
+          (+this.laps_time[0] + +this.laps_time[1] + +this.laps_time[2]).toFixed(2) <= this.$store.state.gestinson.segment_times.total_min_time ? 'text-green' : (+this.laps_time[0] + +this.laps_time[1] + +this.laps_time[2]).toFixed(2) <= this.$store.state.gestinson.segment_times.total_max_time ? 'text-yellow' : 'text-red',
+          'text-h2',
+          'text-center',
+          'q-my-md'
+        ]"
+      >
+        {{ (+this.laps_time[0] + +this.laps_time[1] + +this.laps_time[2]).toFixed(2) }}
+      </h2>
 
       <div class="text-center" v-if="stopped">
         <q-btn v-if="current_lap < 3" class="button_margin" round color="primary" @click="start" icon="play_arrow" :title="$t('start')"/>
@@ -28,9 +38,32 @@
         <q-btn class="button_margin" round disable color="grey" icon="replay" :title="$t('start_again')" />
       </div>
       <br/>
-      <div v-if="laps_time.length" class="text-h5 text-orange text-center">{{ $t('gait') + ':' + this.laps_time[0] }}</div>
-      <div v-if="laps_time.length > 1" class="text-h5 text-orange text-center">{{ $t('balance') + ':' + this.laps_time[1] }}</div>
-      <div v-if="laps_time.length > 2" class="text-h5 text-orange text-center">{{ $t('dual_task') + ':' + this.laps_time[2] }}</div>
+      <div
+        v-if="laps_time.length"
+        :class="[
+          laps_time[0] <= this.$store.state.gestinson.segment_times.seg1_min_time ? 'text-green' : laps_time[0] <= this.$store.state.gestinson.segment_times.seg1_max_time ? 'text-yellow' : 'text-red',
+          'text-h5',
+          'text-center'
+        ]"
+      >
+        {{ $t('gait') + ': ' + this.laps_time[0] }}
+      </div>
+      <div
+        v-if="laps_time.length > 1"
+        :class="[
+          laps_time[1] <= this.$store.state.gestinson.segment_times.seg2_min_time ? 'text-green' : laps_time[1] <= this.$store.state.gestinson.segment_times.seg2_max_time ? 'text-yellow' : 'text-red',
+          'text-h5',
+          'text-center'
+        ]"
+      >{{ $t('balance') + ': ' + this.laps_time[1] }}</div>
+      <div
+        v-if="laps_time.length > 2"
+        :class="[
+          laps_time[2] <= this.$store.state.gestinson.segment_times.seg3_min_time ? 'text-green' : laps_time[2] <= this.$store.state.gestinson.segment_times.seg3_max_time ? 'text-yellow' : 'text-red',
+          'text-h5',
+          'text-center'
+        ]"
+      >{{ $t('dual_task') + ': ' + this.laps_time[2] }}</div>
     </div>
 </template>
 
@@ -75,7 +108,7 @@ export default {
       this.stopped = true
     },
     reset () {
-      this.stopped = false
+      this.stop()
       this.savedTimes = false
       this.startTime = Date.now()
       this.currentTime = Date.now()
@@ -102,59 +135,6 @@ export default {
         segments_id: this.$store.state.gestinson.segment_times.id
       }
       this.$store.dispatch('gestinson/saveTimes', { innerId: this.selected_patient.innerId, times: JSONTimes })
-    },
-    lapColor (lapNum) {
-      const totalSeconds = this.milliseconds / 1000 - this.previous_time // Lo pasamos todo a segundos ya que los tiempos de corte están en segundos
-      console.log(totalSeconds)
-      if (lapNum === 0) {
-        const splitMinTime = this.$store.state.gestinson.segment_times.seg1_min_time
-        if (totalSeconds < splitMinTime) {
-          return 'text-green'
-        } else {
-          const splitMaxTime = this.$store.state.gestinson.segment_times.seg1_max_time
-          if (totalSeconds < splitMaxTime) {
-            return 'text-yellow'
-          } else {
-            return 'text-red'
-          }
-        }
-      } else if (lapNum === 1) {
-        const splitMinTime = this.$store.state.gestinson.segment_times.seg2_min_time
-        if (totalSeconds < splitMinTime) {
-          return 'text-green'
-        } else {
-          const splitMaxTime = this.$store.state.gestinson.segment_times.seg2_max_time
-          if (totalSeconds < splitMaxTime) {
-            return 'text-yellow'
-          } else {
-            return 'text-red'
-          }
-        }
-      } else if (lapNum === 2) {
-        const splitMinTime = this.$store.state.gestinson.segment_times.seg3_min_time
-        if (totalSeconds < splitMinTime) {
-          return 'text-green'
-        } else if (lapNum === 3) {
-          const splitMaxTime = this.$store.state.gestinson.segment_times.seg3_max_time
-          if (totalSeconds < splitMaxTime) {
-            return 'text-yellow'
-          } else {
-            return 'text-red'
-          }
-        }
-      } else {
-        const splitMinTime = this.$store.state.gestinson.segment_times.total_min_time
-        if (totalSeconds < splitMinTime) {
-          return 'text-green'
-        } else {
-          const splitMaxTime = this.$store.state.gestinson.segment_times.total_max_time
-          if (totalSeconds < splitMaxTime) {
-            return 'text-yellow'
-          } else {
-            return 'text-red'
-          }
-        }
-      }
     }
   },
   computed: {
