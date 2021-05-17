@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex bg-image flex-center">
-      <q-fab round @click="cambiarEstado()" class="absolute-top-left" style="margin: 10px" color="primary" icon="arrow_back" title="Volver atrás" />
+      <q-fab round @click="cambiarEstado()" class="absolute-top-left" style="margin: 10px" color="primary" icon="arrow_back" :title="$t('return')" />
         <q-card>
           <q-card-section>
             <div class="text-center q-pt-lg">
@@ -11,7 +11,7 @@
           </q-card-section>
           <q-item>
             <q-item-section>
-              <q-file v-if="!this.new_patient.face_photo" filled v-model="facePhotoObject" label="Foto cara" @input="faceFileReader" counter max-files="1">
+              <q-file v-if="!this.new_patient.face_photo" filled v-model="facePhotoObject" :label="$t('face_photo')" @input="faceFileReader" counter max-files="1">
                 <template v-slot:prepend>
                   <q-icon name="cloud_upload" @click.stop/>
                 </template>
@@ -26,7 +26,7 @@
                   </q-avatar>
                 </template>
               </q-file>
-              <q-file v-else filled v-model="facePhotoObject" label="Foto cara" @input="faceFileReader" counter max-files="1">
+              <q-file v-else filled v-model="facePhotoObject" :label="$t('face_photo')" @input="faceFileReader" counter max-files="1">
                 <template v-slot:prepend>
                   <q-icon name="cloud_upload" @click.stop/>
                 </template>
@@ -43,7 +43,7 @@
               </q-file>
             </q-item-section>
             <q-item-section>
-              <q-file v-if="!this.new_patient.body_photo" filled v-model="bodyPhotoObject" label="Foto cuerpo" @input="bodyFileReader" counter max-files="1">
+              <q-file v-if="!this.new_patient.body_photo" filled v-model="bodyPhotoObject" :label="$t('body_photo')" @input="bodyFileReader" counter max-files="1">
                 <template v-slot:prepend>
                   <q-icon name="cloud_upload" @click.stop/>
                 </template>
@@ -58,7 +58,7 @@
                   <q-icon v-if="bodyPhotoObject !== null" name="close" @click="removeBodyFile" class="cursor-pointer"/>
                 </template>
               </q-file>
-              <q-file v-else filled v-model="bodyPhotoObject" label="Foto cuerpo" @input="bodyFileReader" counter max-files="1">
+              <q-file v-else filled v-model="bodyPhotoObject" :label="$t('body_photo')" @input="bodyFileReader" counter max-files="1">
                 <template v-slot:prepend>
                   <q-icon name="cloud_upload" @click.stop/>
                 </template>
@@ -87,17 +87,16 @@
                     v-model="new_patient.name"
                     lazy-rules
                     :rules="[
-                      val => val.length >= 2 || 'Debes introducir un nombre válido.'
+                      val => val.length >= 2 || $t('err_short_name')
                     ]"
-                    label="Nombre"
+                    :label="$t('name')"
                   />
               </q-item-section>
               <q-item-section>
-                <!-- Las rules están así para que deje un pequeño espacio abajo y sea simétrico a lo demás -->
                 <q-input
                   filled
                   v-model="new_patient.surname"
-                  label="Apellidos"
+                  :label="$t('surname')"
                   style="padding-bottom: 20px"
                 />
               </q-item-section>
@@ -109,9 +108,10 @@
                     v-model="new_patient.dni"
                     label="DNI"
                     :rules= "[
-                      val => new RegExp('^[0-9]{8,8}[A-Z]$').test(val) || val == '' || 'El DNI debe ser 8 números y una letra final'
+                      val => new RegExp('^[0-9]{8,8}[A-Z]$').test(val) || val == '' || $t('err_no_valid_dni')
                     ]"
                     lazy-rules
+                    mask="########A"
                   />
                 </q-item-section>
                 <q-item-section>
@@ -120,8 +120,9 @@
                     v-model="new_patient.sip"
                     label="SIP"
                     :rules= "[
-                      val => new RegExp('^[0-9]{8}$').test(val) || val == '' || 'El SIP deben ser 8 números'
+                      val => new RegExp('^[0-9]{8}$').test(val) || val == '' || $t('err_no_valid_sip')
                     ]"
+                    mask="########"
                     lazy-rules
                   />
               </q-item-section>
@@ -131,11 +132,11 @@
                   <q-input
                     filled
                     v-model="new_patient.birth_date"
-                    hint="Fecha de nacimiento"
+                    :hint="$t('birthdate')"
                     type="date"
                     lazy-rules
                     :rules="[
-                      val => Date.parse(val) < Date.now() || val == '' || 'Fecha inválida',
+                      val => Date.parse(val) < Date.now() || val == '' || $t('err_invalid_date')
                     ]"
                   />
                 </q-item-section>
@@ -143,21 +144,21 @@
                   <q-input
                     filled
                     v-model="new_patient.join_date"
-                    hint="Fecha de registro"
+                    :hint="$t('reg_date')"
                     type="date"
                     lazy-rules
                     :rules="[
-                      val => Date.parse(val) < Date.now() || 'Fecha inválida',
+                      val => Date.parse(val) < Date.now() || $t('err_invalid_date')
                     ]"
                   />
               </q-item-section>
             </q-item>
             <q-item>
               <q-item-section>
-                <q-radio dense v-model="gender" val="male" label="Hombre" />
+                <q-radio dense v-model="gender" val="male" :label="$t('male')" />
                 </q-item-section>
                 <q-item-section>
-                <q-radio dense v-model="gender" val="fem" label="Mujer" />
+                <q-radio dense v-model="gender" val="fem" :label="$t('female')" />
               </q-item-section>
             </q-item>
             <q-item>
@@ -165,10 +166,10 @@
                   <q-input
                     filled
                     v-model="new_patient.tel"
-                    label="Número de contacto"
+                    :label="$t('contact_num')"
                     lazy-rules
                     :rules="[
-                      val => new RegExp('^(?:6[0-9]|7[1-9]|9[0-9])[0-9][0-9]{3}[0-9]{3}$').test(val) || val == '' || 'Introduce un número de teléfono válido'
+                      val => new RegExp('^(?:6[0-9]|7[1-9]|9[0-9])[0-9][0-9]{3}[0-9]{3}$').test(val) || val == '' || $t('err_invalid_phone_num')
                     ]"
                     mask="#########"
                   />
@@ -177,10 +178,10 @@
                   <q-input
                     filled
                     v-model="new_patient.mail"
-                    label="Correo"
+                    :label="$t('email')"
                     lazy-rules
                     :rules="[
-                      val => new RegExp('^[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$').test(val) || val == '' || 'Introduce un correo válido'
+                      val => new RegExp('^[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$').test(val) || val == '' || $t('err_not_valid_email')
                     ]"
                     />
                 </q-item-section>
@@ -190,7 +191,7 @@
                 <q-input
                   filled
                   v-model="new_patient.height"
-                  label="Altura"
+                  :label="$t('height')"
                   mask="#.##"
                   style="padding-bottom: 20px"
                 />
@@ -199,10 +200,10 @@
                 <q-input
                   filled
                   v-model="new_patient.weight"
-                  label="Peso"
+                  :label="$t('weight')"
                   lazy-rules
                   :rules="[
-                    val => new RegExp('^[0-3]{2,3}\.[0-9]{1,2}$').test(val) || val == null || 'Introduce un peso válido'
+                    val => new RegExp('^[0-3]{2,3}\.[0-9]{1,2}$').test(val) || val == null || $t('err_invalid_weight')
                   ]"
                 />
               </q-item-section>
@@ -210,7 +211,7 @@
                   <q-input
                     filled
                     v-model="new_patient.imc"
-                    label="IMC"
+                    :label="$t('bmi')"
                     mask="##.##"
                     style="padding-bottom: 20px"
                   />
@@ -219,7 +220,7 @@
                   <q-input
                     filled
                     v-model="new_patient.body_fat"
-                    label="PGC"
+                    :label="$t('body_fat')"
                     mask="##.##"
                     style="padding-bottom: 20px"
                   />
@@ -228,20 +229,20 @@
             <q-item>
               <q-item-section>
                 <q-input
-                  label="Dirección"
+                  :label="$t('address')"
                   v-model="new_patient.address"
                   filled
                   type="text"
                 />
               </q-item-section>
               <q-item-section>
-                <q-select filled v-model="new_patient.illness_fase" :options="hoehn_yahr" label="Escala Hoehn-Yahr" />
+                <q-select filled v-model="new_patient.illness_fase" :options="hoehn_yahr" :label="$t('hoehn_scale')" />
               </q-item-section>
             </q-item>
             <q-item>
               <q-item-section>
                 <q-input
-                  label="Medicación"
+                  :label="$t('medication')"
                   v-model="new_patient.medication"
                   filled
                   type="textarea"
@@ -268,15 +269,15 @@ export default {
   created () {
     if (this.patientNumberToEdit !== null) { // Si se le pasa un paciente como prop significa que vamos a editarlo, si no, vamos a crear uno.
       this.new_patient = this.$store.state.gestinson.allPatients[this.patientNumberToEdit]
-      this.buttonText = 'Editar'
-      this.mainText = 'Editar paciente'
+      this.buttonText = this.$t('edit')
+      this.mainText = this.$t('edit_patient')
     }
   },
   name: 'PatientForm',
   data () {
     return {
-      mainText: 'Alta paciente',
-      buttonText: 'Crear',
+      mainText: this.$t('new_patient'),
+      buttonText: this.$t('create_patient'),
       facePhotoObject: null,
       bodyPhotoObject: null,
       gender: 'male',
