@@ -5,6 +5,7 @@ export function someAction (context) {
 import { db, auth } from 'boot/firebase'
 import firebase from 'firebase/app'
 import { Loading, Notify } from 'quasar'
+import { i18n } from 'boot/i18n.js'
 
 export function fetchUser ({ commit }, user) {
   commit('SET_LOGGED_IN', user !== null)
@@ -54,7 +55,7 @@ export function saveSegmentTimes ({ commit, state }, data) {
       commit('addSegmentTime', { data: newData, innerId: res.id })
       Notify.create({
         type: 'positive',
-        message: this.$t('cutoff_saved')
+        message: i18n.t('cutoff_saved')
       })
       Loading.hide()
     })
@@ -97,7 +98,7 @@ export function deletePatient ({ state, commit }, numPatient) {
       Loading.hide()
       Notify.create({
         type: 'positive',
-        message: this.$t('patient_deleted')
+        message: i18n.t('patient_deleted')
       })
     })
     .catch(err => {
@@ -116,14 +117,14 @@ export function addNewPatient ({ commit, state }, newPatient) {
     const patientExists = state.allPatients.filter(patient => patient.dni === newPatient.dni || patient.sip === newPatient.sip)
     if (patientExists.length) {
       Loading.hide()
-      reject(this.$t('patient_already_exists'))
+      reject(i18n.t('patient_already_exists'))
     } else {
       db.collection('patients').add(newPatient)
         .then(res => {
           console.log(res)
           commit('addPatient', { data: newPatient, innerId: res.id })
           Loading.hide()
-          resolve(this.$t('patient_added'))
+          resolve(i18n.t('patient_added'))
         })
         .catch(err => {
           Loading.hide()
@@ -143,7 +144,7 @@ export function saveTimes ({ state, commit }, data) {
           commit('addLapTimes', data)
           Notify.create({
             type: 'positive',
-            message: this.$t('times_saved')
+            message: i18n.t('times_saved')
           })
         })
         .catch(err => {
