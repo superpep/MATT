@@ -5,7 +5,7 @@
         :options="patients"
         :option-label="opt => Object(opt) === opt && 'name' in opt ? opt.name + (opt.surname ?  ' ' + opt.surname : '') : '- Null -'"
         v-model="selected_patient"
-        class="absolute-top bg-white"
+        class="flex-top bg-white"
         :label="$t('select_patient')"
       />
       <h4 v-if="current_lap == 3" class="text-h4 text-white q-my-md" id="time" >{{ $t('total_time') }}:</h4>
