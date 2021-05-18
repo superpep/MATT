@@ -26,7 +26,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'PatientList',
   methods: {
@@ -49,7 +48,7 @@ export default {
       this.$emit('edit-patient', numPatient)
     },
     fullName (patient) {
-      return patient.name + ' ' + (patient.surname === null ? '' : patient.surname)
+      return patient.name + (patient.surname === null ? '' : ' ' + patient.surname)
     },
     downloadCSVData (patient) {
       let csv = this.$t('csv_headers')
@@ -57,11 +56,45 @@ export default {
         csv += row.fecha + ',' + row.lap1 + ',' + row.lap2 + ',' + row.lap3 + ',' + row.total + ',' + row.instructor_prueba + '\n'
       })
 
-      const anchor = document.createElement('a')
-      anchor.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv)
-      anchor.target = '_blank'
-      anchor.download = this.fullName(patient) + '.csv'
-      anchor.click()
+      const fileName = this.fullName(patient) + '.csv'
+
+      if (this.$q.platform.is.desktop) {
+        const anchor = document.createElement('a')
+        anchor.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv)
+        anchor.target = '_self'
+        anchor.download = fileName
+        anchor.click()
+      } else {
+        this.saveBlobToSystem(fileName, new Blob([csv], { type: 'text/csv;charset=utf-8;' }))
+      }
+    },
+    saveBlobToSystem (filename, blob) {
+      // define the folder you want to save first, for example this is download folder in Android
+
+      const folderpath = 'file:///storage/emulated/0/download/'
+
+      const onError = function (msg) {
+        this.$q.notify({
+          type: 'negative',
+          message: this.$t('err_download') + ': ' + msg
+        })
+      }
+
+      window.resolveLocalFileSystemURL(folderpath, function (dir) {
+        console.log('Access to the directory granted succesfully')
+        dir.getFile(filename, { create: true }, function (file) {
+          console.log('File created succesfully.')
+          file.createWriter(function (fileWriter) {
+            console.log('Writing content to file')
+            fileWriter.write(blob)
+            console.log('Successfully write file to system')
+            this.$q.notify({
+              type: 'positive',
+              message: this.$t('download_success')
+            })
+          }, onError)
+        }, onError)
+      }, onError)
     }
   },
   computed: {
