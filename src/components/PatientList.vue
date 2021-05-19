@@ -44,8 +44,8 @@ export default {
     showGraph (patient) {
       console.warn('Not implemented')
     },
-    edit (numPatient) {
-      this.$emit('edit-patient', numPatient)
+    edit (patient) {
+      this.$emit('edit-patient', patient)
     },
     fullName (patient) {
       return patient.name + (patient.surname === null ? '' : ' ' + patient.surname)

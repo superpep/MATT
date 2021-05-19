@@ -113,15 +113,30 @@ export function deletePatient ({ state, commit }, numPatient) {
 export function addNewPatient ({ commit, state }, newPatient) {
   Loading.show()
   return new Promise((resolve, reject) => {
-    console.log(newPatient)
-    const patientExists = state.allPatients.filter(patient => patient.dni === newPatient.dni || patient.sip === newPatient.sip)
+    if (newPatient.dni === '') {
+      newPatient.dni = null
+    }
+    if (newPatient.sip === '') {
+      newPatient.sip = null
+    }
+    let patientExists = []
+    if (newPatient.dni !== null && newPatient.sip !== null) {
+      patientExists = state.allPatients.filter(patient => patient.dni === newPatient.dni || patient.sip === newPatient.sip)
+      console.log('sip & dni')
+    } else if (newPatient.dni !== null) {
+      patientExists = state.allPatients.filter(patient => patient.dni === newPatient.dni)
+      console.log('dni')
+    } else if (newPatient.sip !== null) {
+      patientExists = state.allPatients.filter(patient => patient.sip === newPatient.sip)
+      console.log('sip')
+    }
+
     if (patientExists.length) {
       Loading.hide()
       reject(i18n.t('patient_already_exists'))
     } else {
       db.collection('patients').add(newPatient)
         .then(res => {
-          console.log(res)
           commit('addPatient', { data: newPatient, innerId: res.id })
           Loading.hide()
           resolve(i18n.t('patient_added'))
@@ -132,6 +147,28 @@ export function addNewPatient ({ commit, state }, newPatient) {
         })
     }
   })
+}
+
+export function editPatient ({ commit }, data) {
+  Loading.show()
+  const patientId = data.patient.innerId
+  delete data.patient.innerId
+  return db.collection('patients').doc(patientId).set(data.patient)
+    .then(res => {
+      commit('refreshPatient', { patientId: patientId, patient: data.patient, index: data.patientIndex })
+      Loading.hide()
+      Notify.create({
+        type: 'positive',
+        message: i18n.t('patient_edited_success')
+      })
+    })
+    .catch(err => {
+      Notify.create({
+        type: 'negative',
+        message: err.message
+      })
+      Loading.hide()
+    })
 }
 
 export function saveTimes ({ state, commit }, data) {

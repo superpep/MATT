@@ -81,3 +81,8 @@ export const addLapTimes = (state, data) => {
     }
   })
 }
+
+export const refreshPatient = (state, data) => {
+  data.patient.innerId = data.patientId
+  state.allPatients[data.index] = data.patient
+}

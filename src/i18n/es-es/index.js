@@ -100,5 +100,6 @@ export default {
   address: 'Dirección',
   hoehn_scale: 'Escala Hoehn-Yahr',
   medication: 'Medicación',
-  download_success: 'Archivo descargado'
+  download_success: 'Archivo descargado',
+  patient_edited_success: 'Paciente editado'
 }

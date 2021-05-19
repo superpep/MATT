@@ -250,7 +250,8 @@
               </q-item-section>
             </q-item>
             <div>
-              <q-btn style="margin-bottom: 10px" class="full-width" type="submit" color="primary">{{ this.buttonText }}</q-btn>
+              <q-btn v-if="patientToEdit === null" style="margin-bottom: 10px" class="full-width" type="submit" :label="$t('create_patient')" color="primary"/>
+              <q-btn v-else style="margin-bottom: 10px" class="full-width" @click="editarPaciente" :label="$t('edit')" color="primary"/>
             </div>
           </q-form>
         </q-card>
@@ -260,16 +261,15 @@
 <script>
 export default {
   props: {
-    patientNumberToEdit:
+    patientToEdit:
     {
-      type: Number,
+      type: Object,
       default: null
     }
   },
   created () {
-    if (this.patientNumberToEdit !== null) { // Si se le pasa un paciente como prop significa que vamos a editarlo, si no, vamos a crear uno.
-      this.new_patient = this.$store.state.gestinson.allPatients[this.patientNumberToEdit]
-      this.buttonText = this.$t('edit')
+    if (this.patientToEdit !== null) { // Si se le pasa un paciente como prop significa que vamos a editarlo, si no, vamos a crear uno.
+      this.new_patient = JSON.parse(JSON.stringify(this.patientToEdit)) // Hacemos esto para que no coja el valor por referencia si no que lo copie
       this.mainText = this.$t('edit_patient')
     }
   },
@@ -277,7 +277,6 @@ export default {
   data () {
     return {
       mainText: this.$t('new_patient'),
-      buttonText: this.$t('create_patient'),
       facePhotoObject: null,
       bodyPhotoObject: null,
       gender: 'male',
@@ -309,15 +308,33 @@ export default {
     cambiarEstado () {
       this.$emit('cambiar-estado')
     },
-    registrarPaciente () {
+    setGenderOk () {
       this.new_patient.is_male = this.gender === 'male'
-      if (this.new_patient.imc === null && this.new_patient.height !== null && this.new_patient.weight !== null) {
+    },
+    calculateIMC () {
+      if (this.new_patient.imc === null && this.new_patient.height !== null && this.new_patient.weight !== null && this.new_patient.weight !== 0) {
         this.new_patient.imc = this.new_patient.weight / (this.new_patient.height * this.new_patient.height)
       }
-      const faceImg = document.getElementById('face_img')
-      const bodyImg = document.getElementById('body_img')
-      this.new_patient.body_photo = bodyImg.src
-      this.new_patient.face_photo = faceImg.src
+    },
+    setPhotos () {
+      this.new_patient.face_photo = document.getElementById('face_img').src
+      this.new_patient.body_photo = document.getElementById('body_img').src
+    },
+    editarPaciente () {
+      this.setGenderOk()
+      if (this.patientToEdit.weight !== this.new_patient.weight || this.patientToEdit.height !== this.new_patient.height) {
+        this.calculateIMC()
+      }
+      this.setPhotos()
+      this.$store.dispatch('gestinson/editPatient', { patient: this.new_patient, patientIndex: this.$store.state.gestinson.allPatients.indexOf(this.patientToEdit) })
+        .then(() => {
+          this.cambiarEstado()
+        })
+    },
+    registrarPaciente () {
+      this.setGenderOk()
+      this.calculateIMC()
+      this.setPhotos()
       this.$store.dispatch('gestinson/addNewPatient', this.new_patient)
         .then(res => {
           this.$q.notify({

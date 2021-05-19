@@ -41,7 +41,7 @@ export default {
     },
     cambiarEstado () {
       this.addingPatient = !this.addingPatient
-      this.patientNumberToEdit = null
+      this.selectedPatient = null
     },
     editPatient (patient) {
       this.selectedPatient = patient
