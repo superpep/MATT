@@ -330,6 +330,12 @@ export default {
         .then(() => {
           this.cambiarEstado()
         })
+        .catch(err => {
+          this.$q.notify({
+            type: 'negative',
+            message: err
+          })
+        })
     },
     registrarPaciente () {
       this.setGenderOk()
@@ -344,6 +350,7 @@ export default {
           this.cambiarEstado()
         })
         .catch(err => {
+          console.log(err)
           this.$q.notify({
             type: 'negative',
             message: err

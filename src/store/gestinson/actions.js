@@ -110,6 +110,18 @@ export function deletePatient ({ state, commit }, numPatient) {
     })
 }
 
+function patientAlreadyExists (state, newPatient) {
+  let patientExists = []
+  if (newPatient.dni !== null && newPatient.sip !== null) {
+    patientExists = state.allPatients.filter(patient => patient.dni === newPatient.dni || patient.sip === newPatient.sip)
+  } else if (newPatient.dni !== null) {
+    patientExists = state.allPatients.filter(patient => patient.dni === newPatient.dni)
+  } else if (newPatient.sip !== null) {
+    patientExists = state.allPatients.filter(patient => patient.sip === newPatient.sip)
+  }
+  return patientExists.length > 0
+}
+
 export function addNewPatient ({ commit, state }, newPatient) {
   Loading.show()
   return new Promise((resolve, reject) => {
@@ -119,19 +131,7 @@ export function addNewPatient ({ commit, state }, newPatient) {
     if (newPatient.sip === '') {
       newPatient.sip = null
     }
-    let patientExists = []
-    if (newPatient.dni !== null && newPatient.sip !== null) {
-      patientExists = state.allPatients.filter(patient => patient.dni === newPatient.dni || patient.sip === newPatient.sip)
-      console.log('sip & dni')
-    } else if (newPatient.dni !== null) {
-      patientExists = state.allPatients.filter(patient => patient.dni === newPatient.dni)
-      console.log('dni')
-    } else if (newPatient.sip !== null) {
-      patientExists = state.allPatients.filter(patient => patient.sip === newPatient.sip)
-      console.log('sip')
-    }
-
-    if (patientExists.length) {
+    if (patientAlreadyExists(state, newPatient)) {
       Loading.hide()
       reject(i18n.t('patient_already_exists'))
     } else {
@@ -149,8 +149,14 @@ export function addNewPatient ({ commit, state }, newPatient) {
   })
 }
 
-export function editPatient ({ commit }, data) {
+export function editPatient ({ commit, state }, data) {
   Loading.show()
+  if (patientAlreadyExists(state, data.patient)) {
+    Loading.hide()
+    return new Promise((resolve, reject) => {
+      reject(i18n.t('patient_already_exists'))
+    })
+  }
   const patientId = data.patient.innerId
   delete data.patient.innerId
   return db.collection('patients').doc(patientId).set(data.patient)
