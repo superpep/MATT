@@ -329,7 +329,7 @@ export default {
         .catch(err => {
           this.$q.notify({
             type: 'negative',
-            message: err.message
+            message: err
           })
         })
     },
