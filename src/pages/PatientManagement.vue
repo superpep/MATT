@@ -5,7 +5,7 @@
       <q-btn push round @click="cambiarEstado()" style="margin-left: 50%;" class="float-center" color="primary" icon="add" :title="$t('create_patient')" />
     </div>
     <div v-else-if="addingPatient && !showingPatientGraph">
-      <PatientForm @cambiar-estado='cambiarEstado()' :patientNumberToEdit="patientNumberToEdit"/>
+      <PatientForm @cambiar-estado='cambiarEstado()' :patientToEdit="selectedPatient"/>
     </div>
     <div v-else>
       <PatientGraph/>
@@ -30,7 +30,7 @@ export default {
   data () {
     return {
       showingPatientGraph: false,
-      patientNumberToEdit: null,
+      selectedPatient: null,
       addingPatient: false
     }
   },
@@ -43,8 +43,8 @@ export default {
       this.addingPatient = !this.addingPatient
       this.patientNumberToEdit = null
     },
-    editPatient (numPatient) {
-      this.patientNumberToEdit = numPatient
+    editPatient (patient) {
+      this.selectedPatient = patient
       this.addingPatient = !this.addingPatient
     }
   },

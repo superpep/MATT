@@ -15,7 +15,7 @@
             <q-btn v-if="patient.lap_times !== undefined" @click="showGraph(patient)" :title="$t('show_graphs')" flat round icon="assessment" color="purple" />
             <q-btn v-else :title="$t('patient_no_tests')" disabled @click="showGraph(patient)" flat round icon="assessment" color="purple" />
 
-            <q-btn @click="edit(numPatient)" :title="$t('edit')" flat round icon="create" color="green" />
+            <q-btn @click="edit(patient)" :title="$t('edit')" flat round icon="create" color="green" />
 
             <q-btn @click="confirmDelete(numPatient)" :title="$t('delete')" flat round icon="delete" color="red" />
           </div>
