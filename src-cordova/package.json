@@ -18,11 +18,10 @@
   },
   "cordova": {
     "plugins": {
-      "cordova-plugin-whitelist": {},
-      "cordova-plugin-file": {}
+      "cordova-plugin-whitelist": {}
     },
     "platforms": [
-      "android"
+      "ios"
     ]
   }
 }
