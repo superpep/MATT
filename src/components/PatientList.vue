@@ -58,43 +58,18 @@ export default {
 
       const fileName = this.fullName(patient) + '.csv'
 
-      if (this.$q.platform.is.desktop) {
+      if (this.$q.platform.is.desktop) { // Cambiar esto para que detecte web no desktop
         const anchor = document.createElement('a')
         anchor.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv)
         anchor.target = '_self'
         anchor.download = fileName
         anchor.click()
       } else {
-        this.saveBlobToSystem(fileName, new Blob([csv], { type: 'text/csv;charset=utf-8;' }))
-      }
-    },
-    saveBlobToSystem (filename, blob) {
-      // define the folder you want to save first, for example this is download folder in Android
-
-      const folderpath = 'file:///storage/emulated/0/download/'
-
-      const onError = function (msg) {
         this.$q.notify({
           type: 'negative',
-          message: this.$t('err_download') + ': ' + msg
+          message: this.$t('only_web')
         })
       }
-
-      window.resolveLocalFileSystemURL(folderpath, function (dir) {
-        console.log('Access to the directory granted succesfully')
-        dir.getFile(filename, { create: true }, function (file) {
-          console.log('File created succesfully.')
-          file.createWriter(function (fileWriter) {
-            console.log('Writing content to file')
-            fileWriter.write(blob)
-            console.log('Successfully write file to system')
-            this.$q.notify({
-              type: 'positive',
-              message: this.$t('download_success')
-            })
-          }, onError)
-        }, onError)
-      }, onError)
     }
   },
   computed: {

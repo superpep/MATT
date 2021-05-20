@@ -101,5 +101,6 @@ export default {
   hoehn_scale: 'Escala Hoehn-Yahr',
   medication: 'Medicación',
   download_success: 'Archivo descargado',
-  patient_edited_success: 'Paciente editado'
+  patient_edited_success: 'Paciente editado',
+  only_web: 'Esta característica solo está soportada via web'
 }
