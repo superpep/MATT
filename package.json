@@ -1,8 +1,8 @@
 {
-  "name": "gestinson",
+  "name": "matt",
   "version": "0.0.1",
-  "description": "Sistema gestor de pacientes con parkinson para la universidad de Alicante (UA)",
-  "productName": "Gestinson",
+  "description": "Motor Assesment Timed Test",
+  "productName": "MATT",
   "author": "Àlex <alex@alexcode.es>",
   "private": true,
   "scripts": {
