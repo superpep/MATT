@@ -6,7 +6,7 @@
       </div>
       <div class="row">
         <q-card square bordered class="q-pa-lg shadow-3">
-            <q-form class="q-gutter-md" @submit.prevent="login">
+            <q-form class="q-gutter-md" @submit="login">
               <q-card-section>
                 <q-input
                 square
@@ -46,12 +46,12 @@
             <q-card-actions class="q-px-md">
               <q-btn unelevated color="secondary" size="lg" type="submit" class="full-width" :label="$t('login_button')" />
             </q-card-actions>
-            <a @click='goToRegister'>
-              <small class="absolute-bottom-center cursor-pointer text-blue">
-                {{ $t('register_button') }}
-              </small>
-            </a>
-          </q-form>
+            </q-form>
+          <a @click='goToRegister'>
+            <small class="absolute-bottom-center cursor-pointer text-blue">
+              {{ $t('register_button') }}
+            </small>
+          </a>
         </q-card>
       </div>
     </div>
