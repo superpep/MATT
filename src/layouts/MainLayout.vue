@@ -17,7 +17,20 @@
         <q-toolbar-subtitle v-if="userName == null">
           Motor Assessment Timed Test
         </q-toolbar-subtitle>
-        <q-btn to="/edit-profile" flat v-else :label='userName' icon='account_circle'/>
+        <q-btn-dropdown v-else flat icon='account_circle' :label='userName'>
+          <q-list>
+            <q-item clickable to="/edit-profile" v-close-popup>
+              <q-item-section>
+                <q-item-label>{{ $t('edit_profile') }}</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item clickable to="/logout" v-close-popup>
+              <q-item-section>
+                <q-item-label>{{ $t('logout') }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
 
       </q-toolbar>
     </q-header>
