@@ -86,7 +86,7 @@ export default {
             displayName: this.full_name
           })
           this.$q.notify({
-            type: 'success',
+            type: 'positive',
             message: this.$t('check_email_validation')
           })
           this.$router.push({ name: 'login' })
