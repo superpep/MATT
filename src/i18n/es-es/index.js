@@ -102,5 +102,9 @@ export default {
   medication: 'Medicación',
   download_success: 'Archivo descargado',
   patient_edited_success: 'Paciente editado',
-  only_web: 'Esta característica solo está soportada via web'
+  only_web: 'Esta característica solo está soportada via web',
+  delete_account: 'Eliminar cuenta',
+  confirm_delete_acc: '¿Estás seguro de querer eliminar tu cuenta? Esta acción no se puede deshacer',
+  account_deleted: 'Su cuenta ha sido eliminada',
+  no_patients: 'No hay ningún paciente para mostrar. Pulsa el botón para crear el primero'
 }

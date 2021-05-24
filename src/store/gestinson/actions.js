@@ -70,7 +70,7 @@ export function saveSegmentTimes ({ commit, state }, data) {
 
 export function getAllPatients ({ commit, state }) {
   Loading.show()
-  commit('removePatients')
+  commit('removePatients') // Eso lo hacemos para evitar generar duplicados. No miramos si ya hay porque ya lo hacemos antes de llamar a esta acción
   return db.collection('patients').where('responsible_user', '==', state.user.data.uid).get()
     .then((res) => {
       return new Promise((resolve, reject) => {
@@ -218,4 +218,17 @@ export async function editEmail ({ commit }, newEmail) {
     })
   commit('editEmail', newEmail)
   return auth.currentUser.sendEmailVerification()
+}
+
+export function deleteRelatedPatients ({ commit, state }) {
+  state.allPatients.forEach(patient => {
+    return db.collection('patients').doc(patient.innerId).delete()
+      .catch(err => {
+        Notify.create({
+          type: 'negative',
+          message: err.message
+        })
+      })
+  })
+  commit('removePatients')
 }

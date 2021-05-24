@@ -1,6 +1,6 @@
 <template>
   <q-page-container>
-      <q-page class="flex bg-image flex-center">
+      <q-page class="flex flex-center">
         <q-card>
           <q-card-section>
             <q-avatar size="100px" class="absolute-center shadow-10">
@@ -34,6 +34,10 @@
 
           <q-card-section>
             <q-btn class="full-width" @click="editPasswd()" :label="$t('edit_password')"/>
+          </q-card-section>
+
+          <q-card-section>
+            <q-btn color="red" class="full-width" @click="deleteAcc()" :label="$t('delete_account')"/>
           </q-card-section>
         </q-card>
       </q-page>
@@ -90,6 +94,35 @@ export default {
               message: err.message
             })
           })
+      })
+    },
+    deleteAcc () {
+      this.$q.dialog({
+        title: this.$t('delete_account'),
+        message: this.$t('confirm_delete_acc'),
+        cancel: {
+          push: true,
+          label: this.$t('cancel')
+        },
+        ok: {
+          push: true
+        }
+      }).onOk(async () => {
+        await this.$store.dispatch('gestinson/deleteRelatedPatients')
+        await auth.currentUser.delete()
+          .then(() => {
+            this.$q.notify({
+              type: 'positive',
+              message: this.$t('account_deleted')
+            })
+          })
+          .catch(err => {
+            this.$q.notify({
+              type: 'negative',
+              message: err.message
+            })
+          })
+        this.$router.push({ name: 'login' })
       })
     }
   },

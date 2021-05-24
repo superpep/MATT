@@ -102,5 +102,9 @@ export default {
   medication: 'Medication',
   download_success: 'File downloaded',
   patient_edited_success: 'Patient has been edited',
-  only_web: 'This feature is only supported via web'
+  only_web: 'This feature is only supported via web',
+  delete_account: 'Delete account',
+  confirm_delete_acc: 'Are you sure you want to delete your account? This action cannot be undone',
+  account_deleted: 'Your account has been deleted',
+  no_patients: 'There are no patients to show. Press the button below to create your first one'
 }
