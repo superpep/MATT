@@ -24,7 +24,7 @@
                 <q-item-label>{{ $t('edit_profile') }}</q-item-label>
               </q-item-section>
             </q-item>
-            <q-item clickable to="/logout" v-close-popup>
+            <q-item clickable to="/signout" v-close-popup>
               <q-item-section>
                 <q-item-label>{{ $t('logout') }}</q-item-label>
               </q-item-section>
