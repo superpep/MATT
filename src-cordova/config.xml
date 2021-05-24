@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="org.cordova.quasar.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>MATT</name>
-    <description>Sistema gestor de pacientes con parkinson para la universidad de Alicante (UA)</description>
+    <description>Motor Assesment Timed Test</description>
     <author email="alex@alexcode.es" href="http://www.alexcode.es">
         Álex Vidal
     </author>
