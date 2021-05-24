@@ -8,7 +8,7 @@
       <PatientForm @cambiar-estado='cambiarEstado()' :patientToEdit="selectedPatient"/>
     </div>
     <div v-else>
-      <PatientGraph/>
+      <PatientGraph @cambiar-estado='toggleGraph()' :patient="selectedPatient"/>
     </div>
   </q-page>
 </template>
@@ -35,9 +35,12 @@ export default {
     }
   },
   methods: {
-    showPatientGraph () {
+    toggleGraph () {
       this.showingPatientGraph = !this.showingPatientGraph
-      this.addingPatient = false
+    },
+    showPatientGraph (patient) {
+      this.selectedPatient = patient
+      this.toggleGraph()
     },
     cambiarEstado () {
       this.addingPatient = !this.addingPatient

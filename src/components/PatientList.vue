@@ -42,7 +42,7 @@ export default {
       })
     },
     showGraph (patient) {
-      console.warn('Not implemented')
+      this.$emit('show-patient-graph', patient)
     },
     edit (patient) {
       this.$emit('edit-patient', patient)
