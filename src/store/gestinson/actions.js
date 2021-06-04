@@ -110,14 +110,15 @@ export function deletePatient ({ state, commit }, numPatient) {
     })
 }
 
-function patientAlreadyExists (state, newPatient) {
+async function patientAlreadyExists (newPatient) {
   let patientExists = []
+  const allPatients = await db.collection('patients').get() // Cogemos TODOS los pacientes, no solo los que tiene el usuario
   if (newPatient.dni !== null && newPatient.sip !== null) {
-    patientExists = state.allPatients.filter(patient => patient.dni === newPatient.dni || patient.sip === newPatient.sip)
+    patientExists = allPatients.filter(patient => patient.dni === newPatient.dni || patient.sip === newPatient.sip)
   } else if (newPatient.dni !== null) {
-    patientExists = state.allPatients.filter(patient => patient.dni === newPatient.dni)
+    patientExists = allPatients.filter(patient => patient.dni === newPatient.dni)
   } else if (newPatient.sip !== null) {
-    patientExists = state.allPatients.filter(patient => patient.sip === newPatient.sip)
+    patientExists = allPatients.filter(patient => patient.sip === newPatient.sip)
   }
   return patientExists.length > 0
 }
