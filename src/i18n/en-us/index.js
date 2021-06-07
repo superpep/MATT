@@ -70,7 +70,7 @@ export default {
   show_graphs: 'Show graphs',
   delete: 'Delete',
   confirm_delete: 'Are you sure you want to delete the patient ',
-  csv_headers: 'Date,Gait,Balance,Dual task,Total,Instructor\n',
+  csv_headers: 'Date,Gait,Balance,Dual task,Total,Observations,Instructor\n',
   cutoff_times: 'Cutoff times',
   save: 'Save',
   revert_changes: 'Revert changes',
@@ -106,5 +106,7 @@ export default {
   delete_account: 'Delete account',
   confirm_delete_acc: 'Are you sure you want to delete your account? This action cannot be undone',
   account_deleted: 'Your account has been deleted',
-  no_patients: 'There are no patients to show. Press the button below to create your first one'
+  no_patients: 'There are no patients to show. Press the button below to create your first one',
+  observations: 'Observations',
+  none: 'None'
 }

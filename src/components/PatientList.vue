@@ -53,7 +53,7 @@ export default {
     downloadCSVData (patient) {
       let csv = this.$t('csv_headers')
       patient.lap_times.forEach((row) => {
-        csv += row.fecha + ',' + row.lap1 + ',' + row.lap2 + ',' + row.lap3 + ',' + row.total + ',' + row.instructor_prueba + '\n'
+        csv += row.fecha + ',' + row.lap1 + ',' + row.lap2 + ',' + row.lap3 + ',' + row.total + ',' + (row.observations === null ? this.$t('none') : row.observations) + ',' + row.instructor_prueba + '\n'
       })
 
       const fileName = this.fullName(patient) + '.csv'
@@ -61,7 +61,7 @@ export default {
       if (this.$q.platform.is.desktop) { // Cambiar esto para que detecte web no desktop
         const anchor = document.createElement('a')
         anchor.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv)
-        anchor.target = '_self'
+        anchor.target = '_blank'
         anchor.download = fileName
         anchor.click()
       } else {

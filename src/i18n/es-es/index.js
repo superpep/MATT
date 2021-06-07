@@ -70,7 +70,7 @@ export default {
   show_graphs: 'Mostrar gráficas',
   delete: 'Eliminar',
   confirm_delete: '¿Estás seguro de querer eliminar al paciente ',
-  csv_headers: 'Fecha,Marcha,Equilibrio,Doble tarea,Total,Instructor\n',
+  csv_headers: 'Fecha,Marcha,Equilibrio,Doble tarea,Total,Observaciones,Instructor\n',
   cutoff_times: 'Tiempos de corte',
   save: 'Guardar',
   revert_changes: 'Revertir cambios',
@@ -106,5 +106,7 @@ export default {
   delete_account: 'Eliminar cuenta',
   confirm_delete_acc: '¿Estás seguro de querer eliminar tu cuenta? Esta acción no se puede deshacer',
   account_deleted: 'Su cuenta ha sido eliminada',
-  no_patients: 'No hay ningún paciente para mostrar. Pulsa el botón para crear el primero'
+  no_patients: 'No hay ningún paciente para mostrar. Pulsa el botón para crear el primero',
+  observations: 'Observaciones',
+  none: 'Ninguna'
 }

@@ -64,6 +64,17 @@
           'text-center'
         ]"
       >{{ $t('dual_task') + ': ' + this.laps_time[2] }}</div>
+      <q-item>
+        <q-item-section>
+          <q-input
+            :label="$t('observations')"
+            filled
+            v-model="observations"
+            type="textarea"
+            class="bg-primary"
+          />
+        </q-item-section>
+      </q-item>
     </div>
 </template>
 
@@ -82,6 +93,7 @@ export default {
       selected_patient: null,
       current_lap: 0,
       laps_time: [],
+      observations: null,
       previous_time: 0,
       savedTimes: false
     }
@@ -132,7 +144,8 @@ export default {
         lap3: this.laps_time[2],
         total: (+this.laps_time[0] + +this.laps_time[1] + +this.laps_time[2]).toFixed(2),
         instructor_prueba: this.$store.state.gestinson.user.data.displayName,
-        segments_id: this.$store.state.gestinson.segment_times.id
+        segments_id: this.$store.state.gestinson.segment_times.id,
+        observations: this.observations
       }
       this.$store.dispatch('gestinson/saveTimes', { innerId: this.selected_patient.innerId, times: JSONTimes })
     }
