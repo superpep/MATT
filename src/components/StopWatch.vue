@@ -121,6 +121,7 @@ export default {
     },
     reset () {
       this.stop()
+      this.observations = null
       this.savedTimes = false
       this.startTime = Date.now()
       this.currentTime = Date.now()
