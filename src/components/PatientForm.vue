@@ -190,20 +190,25 @@
               <q-item-section>
                 <q-input
                   filled
+                  type="number"
                   v-model="new_patient.height"
                   :label="$t('height')"
-                  mask="#.##"
                   style="padding-bottom: 20px"
+                  lazy-rules
+                  :rules="[
+                    val => val < 3 && val > 0.3 || val == null || val == '' || $t('err_invalid_height')
+                  ]"
                 />
               </q-item-section>
               <q-item-section>
                 <q-input
                   filled
+                  type="number"
                   v-model="new_patient.weight"
                   :label="$t('weight')"
                   lazy-rules
                   :rules="[
-                    val => new RegExp('^[0-3]{2,3}\.[0-9]{1,2}$').test(val) || val == null || $t('err_invalid_weight')
+                    val => val < 350 && val > 0 || val == null || val == '' || $t('err_invalid_weight')
                   ]"
                 />
               </q-item-section>

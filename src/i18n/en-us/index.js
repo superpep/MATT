@@ -33,6 +33,7 @@ export default {
   err_invalid_date: 'Must be a valid date',
   err_invalid_phone_num: 'Must be a valid phone number',
   err_invalid_weight: 'Must be a valid weight',
+  err_invalid_height: 'Must be a valid height',
   err_download: 'Error while downloading the file',
   keep_login: 'Keep me signed in',
   lost_pass: 'Forgot your password?',

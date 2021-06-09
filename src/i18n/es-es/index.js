@@ -33,6 +33,7 @@ export default {
   err_invalid_date: 'Introduce una fecha válida',
   err_invalid_phone_num: 'Introduce un número de teléfono válido',
   err_invalid_weight: 'Introduce un peso válido',
+  err_invalid_height: 'Introduce una altura válida',
   err_download: 'Error descargando el archivo',
   keep_login: 'Mantener sesión iniciada',
   lost_pass: '¿Has olvidado la contraseña?',
