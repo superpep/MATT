@@ -108,5 +108,7 @@ export default {
   account_deleted: 'Su cuenta ha sido eliminada',
   no_patients: 'No hay ningún paciente para mostrar. Pulsa el botón para crear el primero',
   observations: 'Observaciones',
-  none: 'Ninguna'
+  none: 'Ninguna',
+  forgot_password_title: 'Restablecer contraseña',
+  forgot_password_caption: 'Introduzca el email asociado a su cuenta'
 }

@@ -95,8 +95,8 @@ export default {
     },
     resetPassword () {
       this.$q.dialog({
-        title: 'Restablecer contraseña',
-        message: 'Introduzca el email asociado a su cuenta',
+        title: this.$t('forgot_password_title'),
+        message: this.$t('forgot_password_caption'),
         prompt: {
           model: '',
           type: 'email'

@@ -108,5 +108,7 @@ export default {
   account_deleted: 'Your account has been deleted',
   no_patients: 'There are no patients to show. Press the button below to create your first one',
   observations: 'Observations',
-  none: 'None'
+  none: 'None',
+  forgot_password_title: 'Restore password',
+  forgot_password_caption: 'Enter the email associated with your account'
 }
