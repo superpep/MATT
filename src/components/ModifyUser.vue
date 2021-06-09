@@ -108,9 +108,9 @@ export default {
           push: true
         }
       }).onOk(async () => {
-        await this.$store.dispatch('gestinson/deleteRelatedPatients')
         await auth.currentUser.delete()
           .then(() => {
+            this.$store.dispatch('gestinson/deleteRelatedPatients')
             this.$q.notify({
               type: 'positive',
               message: this.$t('account_deleted')
