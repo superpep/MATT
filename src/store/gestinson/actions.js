@@ -112,30 +112,38 @@ export function deletePatient ({ state, commit }, numPatient) {
 
 async function patientAlreadyExists (newPatient) {
   let patientExists = []
-  const allPatients = await db.collection('patients').get() // Cogemos TODOS los pacientes, no solo los que tiene el usuario
-  if (newPatient.dni !== null && newPatient.sip !== null) {
+  const allPatients = []
+  await db.collection('patients').get() // Cogemos TODOS los pacientes, no solo los que tiene el usuario
+    .then(res => {
+      res.forEach(element => {
+        allPatients.push(element.data())
+      })
+    })
+  if (newPatient.dni && newPatient.sip) {
     patientExists = allPatients.filter(patient => patient.dni === newPatient.dni || patient.sip === newPatient.sip)
-  } else if (newPatient.dni !== null) {
+  } else if (newPatient.dni) {
     patientExists = allPatients.filter(patient => patient.dni === newPatient.dni)
-  } else if (newPatient.sip !== null) {
+  } else if (newPatient.sip) {
     patientExists = allPatients.filter(patient => patient.sip === newPatient.sip)
   }
   return patientExists.length > 0
 }
 
-export function addNewPatient ({ commit, state }, newPatient) {
+export async function addNewPatient ({ commit }, newPatient) {
   Loading.show()
-  return new Promise((resolve, reject) => {
-    if (newPatient.dni === '') {
-      newPatient.dni = null
-    }
-    if (newPatient.sip === '') {
-      newPatient.sip = null
-    }
-    if (patientAlreadyExists(state, newPatient)) {
-      Loading.hide()
+  if (newPatient.dni === '') {
+    newPatient.dni = null
+  }
+  if (newPatient.sip === '') {
+    newPatient.sip = null
+  }
+  if (await patientAlreadyExists(newPatient)) {
+    Loading.hide()
+    return new Promise((resolve, reject) => {
       reject(i18n.t('patient_already_exists'))
-    } else {
+    })
+  } else {
+    return new Promise((resolve, reject) => {
       db.collection('patients').add(newPatient)
         .then(res => {
           commit('addPatient', { data: newPatient, innerId: res.id })
@@ -146,8 +154,8 @@ export function addNewPatient ({ commit, state }, newPatient) {
           Loading.hide()
           reject(err.message)
         })
-    }
-  })
+    })
+  }
 }
 
 export function editPatient ({ commit, state }, data) {
