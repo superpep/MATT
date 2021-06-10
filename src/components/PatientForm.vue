@@ -190,6 +190,7 @@
               <q-item-section>
                 <q-input
                   filled
+                  @blur="calculateIMC()"
                   type="number"
                   v-model="new_patient.height"
                   :label="$t('height')"
@@ -204,6 +205,7 @@
                 <q-input
                   filled
                   type="number"
+                  @blur="calculateIMC()"
                   v-model="new_patient.weight"
                   :label="$t('weight')"
                   lazy-rules
@@ -317,7 +319,7 @@ export default {
       this.new_patient.is_male = this.gender === 'male'
     },
     calculateIMC () {
-      if (this.new_patient.imc === null && this.new_patient.height !== null && this.new_patient.weight !== null && this.new_patient.weight !== 0) {
+      if (this.new_patient.height !== null && this.new_patient.weight !== null) {
         this.new_patient.imc = this.new_patient.weight / (this.new_patient.height * this.new_patient.height)
       }
     },
@@ -327,9 +329,6 @@ export default {
     },
     editarPaciente () {
       this.setGenderOk()
-      if (this.patientToEdit.weight !== this.new_patient.weight || this.patientToEdit.height !== this.new_patient.height) {
-        this.calculateIMC()
-      }
       this.setPhotos()
       this.$store.dispatch('gestinson/editPatient', { patient: this.new_patient, patientIndex: this.$store.state.gestinson.allPatients.indexOf(this.patientToEdit) })
         .then(() => {
@@ -344,7 +343,6 @@ export default {
     },
     registrarPaciente () {
       this.setGenderOk()
-      this.calculateIMC()
       this.setPhotos()
       this.$store.dispatch('gestinson/addNewPatient', this.new_patient)
         .then(res => {
