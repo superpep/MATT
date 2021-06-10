@@ -64,7 +64,8 @@
           'text-center'
         ]"
       >{{ $t('dual_task') + ': ' + this.laps_time[2] }}</div>
-      <q-item>
+      <q-btn @click="addingObservations = !addingObservations" :icon="addingObservations ? 'edit_off' : 'edit'" color="primary" :label="addingObservations ? this.$t('hide_observations') : this.$t('show_observations')"/>
+      <q-item v-if="addingObservations">
         <q-item-section>
           <q-input
             :label="$t('observations')"
@@ -86,6 +87,7 @@ export default {
   },
   data () {
     return {
+      addingObservations: false,
       startTime: Date.now(),
       currentTime: Date.now(),
       interval: null,

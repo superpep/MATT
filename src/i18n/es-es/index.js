@@ -111,5 +111,7 @@ export default {
   observations: 'Observaciones',
   none: 'Ninguna',
   forgot_password_title: 'Restablecer contraseña',
-  forgot_password_caption: 'Introduzca el email asociado a su cuenta'
+  forgot_password_caption: 'Introduzca el email asociado a su cuenta',
+  show_observations: 'Añadir observaciones',
+  hide_observations: 'Esconder observaciones'
 }

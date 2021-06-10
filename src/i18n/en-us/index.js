@@ -111,5 +111,7 @@ export default {
   observations: 'Observations',
   none: 'None',
   forgot_password_title: 'Restore password',
-  forgot_password_caption: 'Enter the email associated with your account'
+  forgot_password_caption: 'Enter the email associated with your account',
+  show_observations: 'Add observations',
+  hide_observations: 'Hide observations'
 }
