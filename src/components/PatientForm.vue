@@ -217,9 +217,9 @@
               <q-item-section>
                   <q-input
                     filled
+                    type="number"
                     v-model="new_patient.imc"
                     :label="$t('bmi')"
-                    mask="##.##"
                     style="padding-bottom: 20px"
                   />
               </q-item-section>
