@@ -191,10 +191,9 @@
                 <q-input
                   filled
                   @blur="calculateIMC()"
-                  type="number"
-                  v-model="new_patient.height"
+                  suffix="M"
+                  v-model.number="new_patient.height"
                   :label="$t('height')"
-                  style="padding-bottom: 20px"
                   lazy-rules
                   :rules="[
                     val => val < 3 && val > 0.3 || val == null || val == '' || $t('err_invalid_height')
@@ -205,8 +204,9 @@
                 <q-input
                   filled
                   type="number"
+                  suffix="Kg"
                   @blur="calculateIMC()"
-                  v-model="new_patient.weight"
+                  v-model.number="new_patient.weight"
                   :label="$t('weight')"
                   lazy-rules
                   :rules="[
@@ -217,8 +217,7 @@
               <q-item-section>
                   <q-input
                     filled
-                    type="number"
-                    v-model="new_patient.imc"
+                    v-model.number="new_patient.imc"
                     :label="$t('bmi')"
                     style="padding-bottom: 20px"
                   />
@@ -320,7 +319,7 @@ export default {
     },
     calculateIMC () {
       if (this.new_patient.height !== null && this.new_patient.weight !== null) {
-        this.new_patient.imc = this.new_patient.weight / (this.new_patient.height * this.new_patient.height)
+        this.new_patient.imc = (this.new_patient.weight / (this.new_patient.height * this.new_patient.height)).toFixed(2)
       }
     },
     setPhotos () {
