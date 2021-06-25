@@ -13,13 +13,13 @@
       <h2
       v-else
       :class="[
-          (+this.laps_time[0] + +this.laps_time[1] + +this.laps_time[2]).toFixed(2) <= this.$store.state.gestinson.segment_times.total_min_time ? 'text-green' : (+this.laps_time[0] + +this.laps_time[1] + +this.laps_time[2]).toFixed(2) <= this.$store.state.gestinson.segment_times.total_max_time ? 'text-yellow' : 'text-red',
+          (+this.laps_time[0] + +this.laps_time[1] + +this.laps_time[2]).toFixed(3) <= this.$store.state.gestinson.segment_times.total_min_time ? 'text-green' : (+this.laps_time[0] + +this.laps_time[1] + +this.laps_time[2]).toFixed(3) <= this.$store.state.gestinson.segment_times.total_max_time ? 'text-yellow' : 'text-red',
           'text-h2',
           'text-center',
           'q-my-md'
         ]"
       >
-        {{ (+this.laps_time[0] + +this.laps_time[1] + +this.laps_time[2]).toFixed(2) }}
+        {{ (+this.laps_time[0] + +this.laps_time[1] + +this.laps_time[2]).toFixed(3) }}
       </h2>
 
       <div class="text-center" v-if="stopped">
@@ -132,7 +132,7 @@ export default {
       this.previous_time = 0
     },
     recordLap () {
-      this.laps_time.push((this.milliseconds / 1000 - this.previous_time).toFixed(2))
+      this.laps_time.push((this.milliseconds / 1000 - this.previous_time).toFixed(3))
       if (++this.current_lap === 3) {
         this.stop()
       }
@@ -145,7 +145,7 @@ export default {
         lap1: this.laps_time[0],
         lap2: this.laps_time[1],
         lap3: this.laps_time[2],
-        total: (+this.laps_time[0] + +this.laps_time[1] + +this.laps_time[2]).toFixed(2),
+        total: (+this.laps_time[0] + +this.laps_time[1] + +this.laps_time[2]).toFixed(3),
         instructor_prueba: this.$store.state.gestinson.user.data.displayName,
         segments_id: this.$store.state.gestinson.segment_times.id,
         observations: this.observations
@@ -155,13 +155,13 @@ export default {
   },
   computed: {
     total_time () {
-      return '<h2 class="text-h2 ' + this.lapColor(3) + ' text-center"> ' + (+this.laps_time[0] + +this.laps_time[1] + +this.laps_time[2]).toFixed(2) + '</h2>'
+      return '<h2 class="text-h2 ' + this.lapColor(3) + ' text-center"> ' + (+this.laps_time[0] + +this.laps_time[1] + +this.laps_time[2]).toFixed(3) + '</h2>'
     },
     patients () {
       return this.$store.state.gestinson.allPatients
     },
     time: function () {
-      return this.minutes + ':' + (this.seconds >= 10 ? this.seconds.toFixed(2) : '0' + this.seconds.toFixed(2))
+      return this.minutes + ':' + (this.seconds >= 10 ? this.seconds.toFixed(3) : '0' + this.seconds.toFixed(3))
     },
     milliseconds: function () {
       return this.currentTime - this.startTime
