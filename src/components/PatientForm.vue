@@ -37,7 +37,7 @@
 
                 <template v-slot:after>
                   <q-avatar>
-                    <img :src="new_patient.body_photo" id="face_img">
+                    <img :src="new_patient.face_photo" id="face_img">
                   </q-avatar>
                 </template>
               </q-file>
@@ -65,7 +65,7 @@
 
                 <template v-slot:before>
                   <q-avatar>
-                    <img :src="new_patient.face_photo" id="body_img">
+                    <img :src="new_patient.body_photo" id="body_img">
                   </q-avatar>
                 </template>
 
